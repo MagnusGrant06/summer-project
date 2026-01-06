@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://i3sr46hwksgx"]
+
+[ext_resource type="ArrayMesh" uid="uid://68ggu26ajt8r" path="res://godotasset.obj" id="1_ulcgi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_drvgu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ulcgi"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.96514, -0.090685025, 0.24552216, 0, 0.9380584, 0.34647727, -0.26173443, -0.33439904, 0.9053576, 1.3315632, 1.4031252, 3.067092)
+
+[node name="Tabletop" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.4559445, 0, 0, 0, 0.12336022, 0, 0, 0, 2.5324595, 0.012, 0, 0)
+mesh = SubResource("BoxMesh_drvgu")
+
+[node name="leg1" type="MeshInstance3D" parent="Tabletop"]
+transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, 0.48315072, -8.591988, 0.4688973)
+mesh = SubResource("BoxMesh_ulcgi")
+skeleton = NodePath("../..")
+
+[node name="leg2" type="MeshInstance3D" parent="Tabletop"]
+transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, 0.4818231, -8.591989, -0.4674365)
+mesh = SubResource("BoxMesh_ulcgi")
+skeleton = NodePath("../..")
+
+[node name="leg3" type="MeshInstance3D" parent="Tabletop"]
+transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, -0.48035687, -8.591989, 0.4688973)
+mesh = SubResource("BoxMesh_ulcgi")
+skeleton = NodePath("../..")
+
+[node name="leg4" type="MeshInstance3D" parent="Tabletop"]
+transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, -0.4803568, -8.5919895, -0.4731054)
+mesh = SubResource("BoxMesh_ulcgi")
+skeleton = NodePath("../..")
+
+[node name="playerbody" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5788716, 0, 0, 0, -0.0072922264, -0.14921999, 0, 1.5474477, -0.00070318754, -0.4722928, 0.19198906, 0)
+mesh = ExtResource("1_ulcgi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.57899994, 0, 0, 0, 0.03504332, -0.029992307, 0, 1.5466031, 0.0006795744, -0.472, 0.34307206, 0)
+transparency = 0.65
+mesh = ExtResource("1_ulcgi")
+skeleton = NodePath("../playerbody")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8351744, 0.54998523, 0, -0.54998523, 0.8351744, 0, 4.115511, 5.1169147)
