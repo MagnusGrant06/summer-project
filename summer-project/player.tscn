@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6uttkpggem10"]
+
+[ext_resource type="ArrayMesh" uid="uid://68ggu26ajt8r" path="res://godotasset.obj" id="1_4flbx"]
+
+[sub_resource type="Animation" id="Animation_ulcgi"]
+resource_name = "lid_open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerlid:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.548142, 0, 0), Vector3(0.665913, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("playerlid:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.472, 0.34307206, 0), Vector3(-0.472, 0.65211004, -0.14151356)]
+}
+
+[sub_resource type="Animation" id="Animation_nxogm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerlid:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.548142, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("playerlid:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.472, 0.34307206, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3253y"]
+_data = {
+&"RESET": SubResource("Animation_nxogm"),
+&"lid_open": SubResource("Animation_ulcgi")
+}
+
+[node name="Player" type="Node3D"]
+
+[node name="playerbody" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5788716, 0, 0, 0, -0.007292226, -0.14921999, 0, 1.5474477, -0.0007031875, -0.4722928, 0.19198906, 0)
+mesh = ExtResource("1_4flbx")
+
+[node name="playerlid" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.57899994, 0, 0, 0, 0.035043318, -0.029992307, 0, 1.5466032, 0.0006795731, -0.472, 0.34307206, 0)
+transparency = 0.65
+mesh = ExtResource("1_4flbx")
+skeleton = NodePath("../playerbody")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3253y")
+}

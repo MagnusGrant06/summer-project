@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbnp2l6dop46p"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gderf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gderf"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gderf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egwgl"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gderf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_isq0c"]
+albedo_color = Color(0.27752772, 0.27752772, 0.27752772, 1)
+
+[sub_resource type="Animation" id="Animation_gderf"]
+resource_name = "peek_disk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody3D/Disk:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.49127793, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_egwgl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody3D/Disk:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_isq0c"]
+_data = {
+&"RESET": SubResource("Animation_egwgl"),
+&"peek_disk": SubResource("Animation_gderf")
+}
+
+[node name="Record" type="Node3D"]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_gderf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.032, 0, 0, 0)
+shape = SubResource("BoxShape3D_gderf")
+
+[node name="OuterCase" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.03244384, 0, 0, 0)
+mesh = SubResource("BoxMesh_gderf")
+skeleton = NodePath("../..")
+
+[node name="InnerCase" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(0.9144166, 0, 0, 0, 0.97815275, 0, 0, 0, 0.019025845, 0.044164777, 0, 0)
+mesh = SubResource("BoxMesh_gderf")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_egwgl")
+
+[node name="Disk" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(-0.95, 7.5497897e-10, 6.270224e-15, 0, -2.1855694e-10, 0.95, 1.4344602e-07, 0.005, 4.152582e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_gderf")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_isq0c")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_isq0c")
+}

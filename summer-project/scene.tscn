@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://i3sr46hwksgx"]
+[gd_scene load_steps=6 format=3 uid="uid://i3sr46hwksgx"]
 
-[ext_resource type="ArrayMesh" uid="uid://68ggu26ajt8r" path="res://godotasset.obj" id="1_ulcgi"]
+[ext_resource type="PackedScene" uid="uid://bey4vq0vq4132" path="res://shelf.tscn" id="2_nxogm"]
+[ext_resource type="PackedScene" uid="uid://dbnp2l6dop46p" path="res://record.tscn" id="3_3253y"]
+[ext_resource type="PackedScene" uid="uid://c6uttkpggem10" path="res://player.tscn" id="3_u3cyc"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_drvgu"]
 
@@ -35,15 +37,14 @@ transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, -
 mesh = SubResource("BoxMesh_ulcgi")
 skeleton = NodePath("../..")
 
-[node name="playerbody" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5788716, 0, 0, 0, -0.0072922264, -0.14921999, 0, 1.5474477, -0.00070318754, -0.4722928, 0.19198906, 0)
-mesh = ExtResource("1_ulcgi")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.57899994, 0, 0, 0, 0.03504332, -0.029992307, 0, 1.5466031, 0.0006795744, -0.472, 0.34307206, 0)
-transparency = 0.65
-mesh = ExtResource("1_ulcgi")
-skeleton = NodePath("../playerbody")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.8351744, 0.54998523, 0, -0.54998523, 0.8351744, 0, 4.115511, 5.1169147)
+
+[node name="Shelf" parent="." instance=ExtResource("2_nxogm")]
+transform = Transform3D(1.285, 0, 0, 0, 1.285, 0, 0, 0, 1.285, 0, -2.1043947, -1.9643937)
+
+[node name="Record" parent="." instance=ExtResource("3_3253y")]
+transform = Transform3D(-0.02809036, -0.28806168, 0.9571997, -0.026762767, 0.9574511, 0.2873519, -0.99924755, -0.017545497, -0.03460451, 0.14214587, 1.0483353, -1.8833749)
+
+[node name="Player" parent="." instance=ExtResource("3_u3cyc")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
