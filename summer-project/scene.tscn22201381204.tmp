@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://i3sr46hwksgx"]
+[gd_scene load_steps=6 format=3 uid="uid://i3sr46hwksgx"]
 
-[ext_resource type="Script" uid="uid://b37lr06jt043t" path="res://main.gd" id="1_u3cyc"]
 [ext_resource type="PackedScene" uid="uid://bey4vq0vq4132" path="res://shelf.tscn" id="2_nxogm"]
 [ext_resource type="PackedScene" uid="uid://dbnp2l6dop46p" path="res://record.tscn" id="3_3253y"]
 [ext_resource type="PackedScene" uid="uid://c6uttkpggem10" path="res://player.tscn" id="3_u3cyc"]
@@ -10,7 +9,6 @@
 [sub_resource type="BoxMesh" id="BoxMesh_ulcgi"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_u3cyc")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.96514, -0.090685025, 0.24552216, 0, 0.9380584, 0.34647727, -0.26173443, -0.33439904, 0.9053576, 1.3315632, 1.4031252, 3.067092)

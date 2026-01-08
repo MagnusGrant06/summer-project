@@ -73,22 +73,23 @@ script = ExtResource("1_onrkg")
 transform = Transform3D(0.5788716, 0, 0, 0, -0.007292226, -0.14921999, 0, 1.5474477, -0.0007031875, -0.4722928, 0.19198906, 0)
 mesh = ExtResource("1_4flbx")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3253y")
+}
+
 [node name="playerlid" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.57899994, 0, 0, 0, 0.035043318, -0.029992307, 0, 1.5466032, 0.0006795731, -0.472, 0.34307206, 0)
 transparency = 0.65
 mesh = ExtResource("1_4flbx")
 skeleton = NodePath("../playerbody")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3253y")
-}
+[node name="Area3D" type="Area3D" parent="playerlid"]
+transform = Transform3D(1.7271159, 0, 0, 0, 0.014642812, 0.64624643, 0, -33.32477, 0.75508094, 0.8151987, -0.0050235395, 11.432798)
 
-[node name="Area3D" type="Area3D" parent="."]
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="playerlid/Area3D"]
 transform = Transform3D(0.57899994, 0, 0, 0, 0.035043318, -0.029992307, 0, 1.5466032, 0.0006795731, -0.472, 0.34307206, 0)
 shape = SubResource("ConcavePolygonShape3D_i3pqv")
 
-[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="mouse_entered" from="playerlid/Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="playerlid/Area3D" to="." method="_on_area_3d_mouse_exited"]

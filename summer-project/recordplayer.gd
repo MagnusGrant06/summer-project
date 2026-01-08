@@ -14,6 +14,7 @@ func _process(_delta: float) -> void:
 		lid_animation.play("lid_open")
 		lid_open = true
 		return
+	#print(Main.all_records)
 
 func _on_area_3d_mouse_entered() -> void:
 	var newShader = ShaderMaterial.new()

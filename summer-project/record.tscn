@@ -1,10 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://dbnp2l6dop46p"]
+[gd_scene load_steps=13 format=3 uid="uid://dbnp2l6dop46p"]
+
+[ext_resource type="Script" uid="uid://cqpa0dsi3vgxp" path="res://record.gd" id="1_egwgl"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gderf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gderf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gderf"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gderf"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egwgl"]
 albedo_color = Color(0, 0, 0, 1)
@@ -28,6 +33,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RigidBody3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_gderf"]
 resource_name = "peek_disk"
@@ -44,17 +61,35 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0.49127793, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_isq0c"]
+resource_name = "reveal_record"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.7, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_isq0c"]
 _data = {
 &"RESET": SubResource("Animation_egwgl"),
-&"peek_disk": SubResource("Animation_gderf")
+&"peek_disk": SubResource("Animation_gderf"),
+&"reveal_record": SubResource("Animation_isq0c")
 }
 
 [node name="Record" type="Node3D"]
+script = ExtResource("1_egwgl")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 mass = 19.177
 physics_material_override = SubResource("PhysicsMaterial_gderf")
+freeze = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.032, 0, 0, 0)
@@ -64,6 +99,13 @@ shape = SubResource("BoxShape3D_gderf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.03244384, 0, 0, 0)
 mesh = SubResource("BoxMesh_gderf")
 skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="RigidBody3D/OuterCase"]
+transform = Transform3D(1.7271159, 0, 0, 0, 0.014642812, 0.64624643, 0, -33.32477, 0.75508094, 0.8151987, -0.0050235395, 11.432798)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D/OuterCase/Area3D"]
+transform = Transform3D(0.57899994, 0, 0, 0, 0.035043318, -0.029992308, 0, 1.5466032, 0.0006795732, -0.472, 0.34307206, -9.313226e-10)
+shape = SubResource("ConcavePolygonShape3D_gderf")
 
 [node name="InnerCase" type="MeshInstance3D" parent="RigidBody3D"]
 transform = Transform3D(0.9144166, 0, 0, 0, 0.97815275, 0, 0, 0, 0.019025845, 0.044164777, 0, 0)
@@ -82,3 +124,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_isq0c")
 }
 speed_scale = 1.2
+
+[connection signal="mouse_entered" from="RigidBody3D/OuterCase/Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="RigidBody3D/OuterCase/Area3D" to="." method="_on_area_3d_mouse_exited"]
