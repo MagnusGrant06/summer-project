@@ -13,7 +13,7 @@
 script = ExtResource("1_u3cyc")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.9651399, -0.09068502, 0.24552214, 0, 0.9380584, 0.34647727, -0.2617344, -0.33439904, 0.9053576, 1.3315632, 1.4031252, 3.067092)
+transform = Transform3D(0.96514, -0.090685025, 0.24552216, 0, 0.9380584, 0.34647727, -0.26173443, -0.33439904, 0.9053576, 1.3315632, 1.4031252, 3.067092)
 
 [node name="Tabletop" type="MeshInstance3D" parent="."]
 transform = Transform3D(4.4559445, 0, 0, 0, 0.12336022, 0, 0, 0, 2.5324595, 0.012, 0, 0)
@@ -377,3 +377,6 @@ transform = Transform3D(-0.026855228, -0.0044488595, 0.77773386, -0.013799672, 0
 
 [node name="Player" parent="." instance=ExtResource("3_u3cyc")]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+
+[node name="Record41" parent="." instance=ExtResource("3_3253y")]
+transform = Transform3D(0.766879, -0.012927638, 0.1316855, 0.0056403405, 0.77697724, 0.043429367, -0.1321983, -0.041842572, 0.765757, 1, 1.052, 2.3)

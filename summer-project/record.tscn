@@ -87,7 +87,6 @@ _data = {
 script = ExtResource("1_egwgl")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
-mass = 19.177
 physics_material_override = SubResource("PhysicsMaterial_gderf")
 freeze = true
 
