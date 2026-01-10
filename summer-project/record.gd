@@ -4,14 +4,20 @@ class_name Record extends Node3D
 @onready var animator = $AnimationPlayer
 @onready var camera = $"../../Camera3D"
 @onready var parent_record = $"."
+
+var base_position
+var base_rotation
+var dummy_record
+
 var record_state
 func _ready() -> void:
-	record_state = RecordState.StoredRecord.new(global_position,hover_shader,case,animator,camera)
+	dummy_record = self
+	base_position = global_position
+	base_rotation = global_rotation
+	record_state = RecordState.StoredRecord.new(dummy_record)
 
 func _process(_delta: float) -> void:
-	if(Input.is_action_just_pressed("click") && record_state.hovering):
-		_on_mouse_clicked()
-	global_position = record_state.parent_position
+	_on_mouse_clicked()
 
 func _on_area_3d_mouse_entered() -> void:
 	record_state._on_area_3d_mouse_entered()
