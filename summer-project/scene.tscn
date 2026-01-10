@@ -17,7 +17,7 @@
 script = ExtResource("1_u3cyc")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.9651399, -0.09068502, 0.24552214, 0, 0.9380584, 0.34647727, -0.2617344, -0.33439904, 0.9053576, 1.3315632, 1.4031252, 3.067092)
+transform = Transform3D(1, 0, 0, 0, 0.9486554, 0.3163114, 0, -0.3163114, 0.9486554, 0, 1.796, 2.894)
 
 [node name="Tabletop" type="MeshInstance3D" parent="."]
 transform = Transform3D(4.4559445, 0, 0, 0, 0.12336022, 0, 0, 0, 2.5324595, 0.012, 0, 0)

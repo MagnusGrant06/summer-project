@@ -31,7 +31,8 @@ class StoredRecord extends RecordState:
 
 	func _on_mouse_clicked() -> void:
 		if(Input.is_action_just_pressed("click") && hovering && !Global.record_in_use):
-			var target_vector = Vector3(1.087,1.069,2.226)
+			#var target_vector = Vector3(1.087,1.069,2.226)
+			var target_vector = (parent.camera.global_position*0.65)+Vector3(0.0,0.3,0.0)
 			parent.global_position = target_vector
 			parent.global_rotation = parent.camera.global_rotation
 			parent.animator.stop()
