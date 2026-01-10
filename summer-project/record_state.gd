@@ -42,6 +42,7 @@ class StoredRecord extends RecordState:
 
 class ViewingRecord extends RecordState:
 	var hovering = false
+	var disk_peeked = false
 	func _init(parent_record : Record) -> void:
 		parent = parent_record
 		parent.animator.stop()
@@ -62,4 +63,13 @@ class ViewingRecord extends RecordState:
 			parent.global_rotation = parent.base_rotation
 			Global.record_in_use = false
 		if(Input.is_action_just_pressed("click")):
-			parent.animator.play("peek_disk")
+			if(!parent.animator.is_playing() && !disk_peeked):
+				parent.animator.play("peek_disk")
+				disk_peeked = true
+			if(!parent.animator.is_playing() && disk_peeked):
+				parent.animator.play_backwards("peek_disk")
+				disk_peeked = false
+		if(Input.is_action_just_pressed("scroll_up")):
+			parent.global_rotation += Vector3(0.0,1.0/6.0,0.0)
+		if(Input.is_action_just_pressed("scroll_down")):
+			parent.global_rotation -= Vector3(0.0,1.0/6.0,0.0)
