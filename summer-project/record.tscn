@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbnp2l6dop46p"]
+[gd_scene load_steps=14 format=3 uid="uid://dbnp2l6dop46p"]
 
 [ext_resource type="Script" uid="uid://cqpa0dsi3vgxp" path="res://record.gd" id="1_egwgl"]
+[ext_resource type="PackedScene" uid="uid://flkdql0wopio" path="res://record_disk.tscn" id="2_isq0c"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gderf"]
 
@@ -13,11 +14,6 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egwgl"]
 albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_gderf"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_isq0c"]
-albedo_color = Color(0.27752772, 0.27752772, 0.27752772, 1)
 
 [sub_resource type="Animation" id="Animation_w6ejl"]
 length = 0.001
@@ -33,20 +29,32 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RigidBody3D/RecordDisk:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_gderf"]
 resource_name = "peek_disk"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("RigidBody3D/Disk:position")
+tracks/0/path = NodePath("RigidBody3D/RecordDisk:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.49127793, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0.4838642, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_isq0c"]
@@ -64,11 +72,43 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(-0.7, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_fx2x7"]
+resource_name = "test"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody3D/RecordDisk:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.0109818, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7e2wu"]
+resource_name = "reveal_disk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody3D/RecordDisk:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.73333335, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.4838642, 0, 0), Vector3(1.0662881, 0, 0), Vector3(1.0662881, 0, 0.17932934), Vector3(0.9719635, 0, 0.30092216), Vector3(0, 0, 0.301)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_isq0c"]
 _data = {
 &"RESET": SubResource("Animation_w6ejl"),
 &"peek_disk": SubResource("Animation_gderf"),
-&"reveal_record": SubResource("Animation_isq0c")
+&"reveal_disk": SubResource("Animation_7e2wu"),
+&"reveal_record": SubResource("Animation_isq0c"),
+&"test": SubResource("Animation_fx2x7")
 }
 
 [node name="Record" type="Node3D"]
@@ -100,11 +140,7 @@ mesh = SubResource("BoxMesh_gderf")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_egwgl")
 
-[node name="Disk" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(-0.95, 7.5497897e-10, 6.270224e-15, 0, -2.1855694e-10, 0.95, 1.4344602e-07, 0.005, 4.152582e-08, 0, 0, 0)
-mesh = SubResource("CylinderMesh_gderf")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_isq0c")
+[node name="RecordDisk" parent="RigidBody3D" instance=ExtResource("2_isq0c")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

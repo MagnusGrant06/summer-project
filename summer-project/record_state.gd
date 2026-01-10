@@ -61,6 +61,8 @@ class ViewingRecord extends RecordState:
 		if(Input.is_action_just_pressed("right_click")):
 			parent.global_position = parent.base_position
 			parent.global_rotation = parent.base_rotation
+			queue_free()
+			parent.record_state = StoredRecord.new(parent)
 			Global.record_in_use = false
 		if(Input.is_action_just_pressed("click")):
 			if(!parent.animator.is_playing() && !disk_peeked):
