@@ -13,13 +13,14 @@ extends Node3D
 var grabbed = false
 var hovering = false
 var revealed = false
+var default = true
 var arbitrary_z = 1.0
-var base_rotation
 
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()
 	if(grabbed):
 		calculate_location()
+
 
 func _on_area_3d_mouse_entered() -> void:
 	var newShader = ShaderMaterial.new()
@@ -34,24 +35,38 @@ func _on_area_3d_mouse_exited() -> void:
 func _on_mouse_clicked() -> void:
 	if(!hovering):
 		return
-	if(Input.is_action_just_pressed("click") && revealed):
-		grabbed = true
-		case.freeze = false
-		reparent(master_scene,true)
-		parent_body.freeze = false
-	if(Input.is_action_just_pressed("click") && !revealed):
-		case_animation.play("reveal_disk")
-		revealed = true
-	if(Input.is_action_just_pressed("right_click")&&revealed):
-		revealed = false
-		case_animation.play_backwards("reveal_disk")
-	if(Input.is_action_just_pressed("scroll_up") && grabbed):
-		arbitrary_z += 0.2
-	if(Input.is_action_just_pressed("scroll_down") && grabbed):
-		arbitrary_z -= 0.2
+	if(grabbed):
+		grabbed_mouse_action()
+	if(default):
+		default_mouse_action()
 
 func calculate_location() -> void:
 	var camera_space2 = camera.project_position(get_viewport().get_mouse_position(),arbitrary_z)
 	global_position = camera_space2
 	mesh.global_position = global_position
 	mesh.global_rotation = global_rotation + Vector3(PI/2,0.0,0.0)
+
+func default_mouse_action() -> void:
+	if(Input.is_action_just_pressed("click") && revealed):
+		grabbed = true
+		default = false
+		case.freeze = false
+		reparent(master_scene,true)
+		parent_body.freeze = true
+		parent_body.global_position = global_position
+	if(Input.is_action_just_pressed("click") && !revealed):
+		case_animation.play("reveal_disk")
+		revealed = true
+	if(Input.is_action_just_pressed("right_click")&&revealed):
+		revealed = false
+		case_animation.play_backwards("reveal_disk")
+
+func grabbed_mouse_action() -> void:
+	if(Input.is_action_just_pressed("right_click")):
+		grabbed = false
+		default = true
+		parent_body.freeze = false
+	if(Input.is_action_just_pressed("scroll_up")):
+		arbitrary_z += 0.2
+	if(Input.is_action_just_pressed("scroll_down")):
+		arbitrary_z -= 0.2
