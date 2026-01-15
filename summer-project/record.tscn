@@ -57,6 +57,21 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0.4838642, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_7e2wu"]
+resource_name = "reveal_disk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody3D/RecordDisk:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.73333335, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.4838642, 0, 0), Vector3(1.0662881, 0, 0), Vector3(1.0662881, 0, 0.17932934), Vector3(0.9719635, 0, 0.30092216), Vector3(0, 0, 0.301)]
+}
+
 [sub_resource type="Animation" id="Animation_isq0c"]
 resource_name = "reveal_record"
 tracks/0/type = "value"
@@ -85,21 +100,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(1.0109818, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_7e2wu"]
-resource_name = "reveal_disk"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RigidBody3D/RecordDisk:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.6, 0.73333335, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0.4838642, 0, 0), Vector3(1.0662881, 0, 0), Vector3(1.0662881, 0, 0.17932934), Vector3(0.9719635, 0, 0.30092216), Vector3(0, 0, 0.301)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_isq0c"]

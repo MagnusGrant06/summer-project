@@ -25,14 +25,14 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_crfh5")
 
 [node name="Area3D" type="Area3D" parent="RigidBody3D/Disk"]
-transform = Transform3D(-1.0526315, 0, 1.5894294e-07, 3.019916e-05, -8.742278e-06, 199.99998, 6.9476166e-15, 1.0526315, 4.6011984e-08, 0, 0, 0)
+transform = Transform3D(-1.0526315, 9.202397e-08, 7.642741e-13, 0, -4.6011984e-08, 199.99998, 9.202397e-08, 1.0526315, 8.742277e-06, 0, 0, 0)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D/Disk/Area3D"]
-transform = Transform3D(-0.95000035, 2.2599238e-09, 6.270225e-15, 0, -6.5421957e-10, 0.9500001, 1.4344607e-07, 0.014966801, 4.1525823e-08, 0, 0, 0)
+transform = Transform3D(-0.95000035, 2.259924e-09, 6.270225e-15, 0, -6.542196e-10, 0.9500001, 1.4344606e-07, 0.014966801, 4.1525823e-08, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_8h21m")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-transform = Transform3D(-0.95, -4.3711387e-10, -3.6303023e-15, 0, -2.1855694e-10, 0.95, -8.305164e-08, 0.005, 4.152582e-08, 0, 0, 0)
+transform = Transform3D(-0.95, -7.5497897e-10, -6.270224e-15, 0, -2.1855694e-10, 0.95, -1.4344602e-07, 0.005, 4.152582e-08, 0, 0, 0)
 shape = SubResource("CylinderShape3D_crfh5")
 
 [connection signal="mouse_entered" from="RigidBody3D/Disk/Area3D" to="." method="_on_area_3d_mouse_entered"]

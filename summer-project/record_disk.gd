@@ -1,4 +1,4 @@
-extends Node3D
+class_name RecordDisk extends Node3D
 
 @onready var hover_shader = load("res://hover_shader.gdshader")
 @onready var mesh = $RigidBody3D/Disk
@@ -16,10 +16,15 @@ var revealed = false
 var default = true
 var arbitrary_z = 1.0
 
+func _ready() -> void:
+	add_to_group("disk")
+
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()
+	check_for_input()
 	if(grabbed):
 		calculate_location()
+		global_rotation.z = 0.0
 
 
 func _on_area_3d_mouse_entered() -> void:
@@ -52,8 +57,7 @@ func default_mouse_action() -> void:
 		default = false
 		case.freeze = false
 		reparent(master_scene,true)
-		parent_body.freeze = true
-		parent_body.global_position = global_position
+		reset_disk()
 	if(Input.is_action_just_pressed("click") && !revealed):
 		case_animation.play("reveal_disk")
 		revealed = true
@@ -70,3 +74,27 @@ func grabbed_mouse_action() -> void:
 		arbitrary_z += 0.2
 	if(Input.is_action_just_pressed("scroll_down")):
 		arbitrary_z -= 0.2
+
+func check_for_input() -> void:
+	if(!grabbed):
+		return
+	if(Input.is_action_pressed("w")):
+		rotate_x(1.0/6.0)
+	if(Input.is_action_pressed("s")):
+		rotate_x(-1.0/6.0)
+	if(Input.is_action_pressed("a")):
+		rotate_y(-1.0/6.0)
+	if(Input.is_action_pressed("d")):
+		rotate_y(1.0/6.0)
+
+func reset_disk() -> void:
+	parent_body.freeze = true
+	parent_body.global_position = global_position
+	phyisics_hitbox.global_rotation = global_rotation - Vector3(PI/2,0.0,0.0)
+	
+func attach_body(parent: Node3D) -> void:
+	reparent(parent)
+	parent_body.freeze = true
+	global_position = parent.disk_join.global_position
+	global_rotation = Vector3(PI/2,0.0,0.)
+	parent.disk_join.node_b = "."
