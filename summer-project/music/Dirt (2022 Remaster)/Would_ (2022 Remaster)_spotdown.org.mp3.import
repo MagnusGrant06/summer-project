@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://mqrn3warld3c"
+path="res://.godot/imported/Would_ (2022 Remaster)_spotdown.org.mp3-b1681864cc24cda3d0b2d8f7aeeaf674.mp3str"
+
+[deps]
+
+source_file="res://music/Dirt (2022 Remaster)/Would_ (2022 Remaster)_spotdown.org.mp3"
+dest_files=["res://.godot/imported/Would_ (2022 Remaster)_spotdown.org.mp3-b1681864cc24cda3d0b2d8f7aeeaf674.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://durfm7u8dx4wc"
+path="res://.godot/imported/Rooster (2022 Remaster)_spotdown.org.mp3-d9fc124bb73810848fdaef7892645e05.mp3str"
+
+[deps]
+
+source_file="res://music/Dirt (2022 Remaster)/Rooster (2022 Remaster)_spotdown.org.mp3"
+dest_files=["res://.godot/imported/Rooster (2022 Remaster)_spotdown.org.mp3-d9fc124bb73810848fdaef7892645e05.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

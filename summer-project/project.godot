@@ -18,6 +18,13 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://global.gd"
+MusicManager="*res://music_manager.gd"
+
+[file_customization]
+
+folder_colors={
+"res://music/Dirt (2022 Remaster)/": "orange"
+}
 
 [input]
 

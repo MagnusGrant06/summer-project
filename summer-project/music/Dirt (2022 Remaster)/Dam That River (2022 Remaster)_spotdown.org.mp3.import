@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bvlafjf6px6ab"
+path="res://.godot/imported/Dam That River (2022 Remaster)_spotdown.org.mp3-5b59f7f94895cbfb220db68ea165dd20.mp3str"
+
+[deps]
+
+source_file="res://music/Dirt (2022 Remaster)/Dam That River (2022 Remaster)_spotdown.org.mp3"
+dest_files=["res://.godot/imported/Dam That River (2022 Remaster)_spotdown.org.mp3-5b59f7f94895cbfb220db68ea165dd20.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -6,7 +6,7 @@ class_name RecordDisk extends Node3D
 @onready var phyisics_hitbox = $RigidBody3D/CollisionShape3D
 
 @onready var master_scene = $"../../../.."
-@onready var camera = $"../../../../Camera3D"
+@onready var camera = $"../../../../../Camera3D"
 @onready var case_animation = $"../../AnimationPlayer"
 @onready var case = $".."
 
@@ -16,9 +16,12 @@ var revealed = false
 var default = true
 var arbitrary_z = 1.0
 
-func _ready() -> void:
-	add_to_group("disk")
+var album : MusicManager.Album
 
+func _init(music : MusicManager.Album) -> void:
+	album = music
+	
+	
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()
 	check_for_input()

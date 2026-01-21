@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://54jn0mqaocfg"
+path="res://.godot/imported/Angry Chair (2022 Remaster)_spotdown.org.mp3-43a5715071d831afaf0d96f62650d1fb.mp3str"
+
+[deps]
+
+source_file="res://music/Dirt (2022 Remaster)/Angry Chair (2022 Remaster)_spotdown.org.mp3"
+dest_files=["res://.godot/imported/Angry Chair (2022 Remaster)_spotdown.org.mp3-43a5715071d831afaf0d96f62650d1fb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

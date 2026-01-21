@@ -1,7 +1,11 @@
 extends Node3D
 var all_records = []
-@onready var shelf = $Shelf
+var all_albums = MusicManager.get_albums()
+@onready var record_holder = $Shelf/Node3D
 
 func _ready() -> void:
-	for child in shelf.get_children(false):
+	var i = 0
+	for child in record_holder.get_children(false):
+		child.disk = RecordDisk.new(all_albums[i])
 		all_records.append(child)
+		

@@ -2,8 +2,9 @@ class_name Record extends Node3D
 @onready var hover_shader = load("res://hover_shader.gdshader")
 @onready var case = $RigidBody3D/OuterCase
 @onready var animator = $AnimationPlayer
-@onready var camera = $"../../Camera3D"
+@onready var camera = $"../../../Camera3D"
 @onready var parent_record = $"."
+@onready var disk = $RigidBody3D/RecordDisk
 
 var base_position
 var base_rotation
