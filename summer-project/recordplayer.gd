@@ -9,9 +9,10 @@ extends Node3D
 
 var mouse_entered = false
 var lid_open = false
-var has_disk = false
+var playing = false
 
 func _process(_delta: float) -> void:
+	print(get_child(get_children().size()-1))
 	if(Input.is_action_just_pressed("click") && mouse_entered && lid_open):
 		lid_animation.play_backwards("lid_open")
 		lid_open = false
@@ -45,3 +46,15 @@ func _on_collection_area_body_entered(body: Node3D) -> void:
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if (event.is_action_pressed("click")):
 		lid_animation.play("press_play")
+		playing  = true
+		play_disk_music()
+
+func play_disk_music() -> void:
+	if(!playing):
+		return
+	var disk_child = get_child(get_children().size()-1)
+	if( !(disk_child is RecordDisk) ):
+		return
+	var current_songs : Array[AudioStreamPlayer] = disk_child.album.songs
+	var i :int = 0
+	current_songs[i].play()

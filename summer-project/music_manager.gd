@@ -16,6 +16,10 @@ func get_albums() -> Array[Album]:
 	return all_albums
 
 class Album:
-	var songs : Array[AudioStreamMP3]
+	var songs : Array[AudioStreamPlayer]
 	func _init(all_songs : Array[AudioStreamMP3]) -> void:
-		songs = all_songs
+		for song in all_songs:
+			var player :AudioStreamPlayer = AudioStreamPlayer.new()
+			player.volume_db = 0.5
+			player.stream = load(song.resource_path)
+			songs.append(player)
