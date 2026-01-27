@@ -9,10 +9,13 @@ extends Node3D
 
 var mouse_entered = false
 var lid_open = false
-var playing = false
+var play_botton_pressed = false
+var currently_playing_song = false
+
+var playing_song : AudioStreamPlayer
 
 func _process(_delta: float) -> void:
-	print(get_child(get_children().size()-1))
+	play_disk_music()
 	if(Input.is_action_just_pressed("click") && mouse_entered && lid_open):
 		lid_animation.play_backwards("lid_open")
 		lid_open = false
@@ -46,15 +49,26 @@ func _on_collection_area_body_entered(body: Node3D) -> void:
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if (event.is_action_pressed("click")):
 		lid_animation.play("press_play")
-		playing  = true
-		play_disk_music()
+		play_botton_pressed  = true
+
+var i : int = 0
 
 func play_disk_music() -> void:
-	if(!playing):
+	if(!play_botton_pressed):
 		return
 	var disk_child = get_child(get_children().size()-1)
 	if( !(disk_child is RecordDisk) ):
 		return
 	var current_songs : Array[AudioStreamPlayer] = disk_child.album.songs
-	var i :int = 0
-	current_songs[i].play()
+	disk_child.global_rotation.y += deg_to_rad(0.0001)
+	playing_song = current_songs[i]
+	if(playing_song.finished.get_connections().size() <1):
+		playing_song.finished.connect(_on_song_finished)
+	if(!playing_song.playing):
+		playing_song.play()
+	if(Input.is_action_just_pressed("skip")):
+		playing_song.stop()
+		i+=1
+
+func _on_song_finished() -> void:
+	i+=1
