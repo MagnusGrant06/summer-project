@@ -76,3 +76,21 @@ class ViewingRecord extends RecordState:
 			parent.global_rotation += Vector3(0.0,1.0/6.0,0.0)
 		if(Input.is_action_just_pressed("scroll_down")):
 			parent.global_rotation -= Vector3(0.0,1.0/6.0,0.0)
+class EmptyRecord extends RecordState:
+	var hovering = false
+	
+	func _init(parent_record : Record) -> void:
+		parent = parent_record
+		parent.physics_body.freeze = false
+		parent.physics_body.apply_central_force(Vector3(190.0,0.0,-190.0))
+
+	func _on_area_3d_mouse_entered() -> void:
+		var newShader = ShaderMaterial.new()
+		newShader.shader = parent.hover_shader
+		parent.case.material_override = newShader
+		hovering = true
+	func _on_area_3d_mouse_exited() -> void:
+		parent.case.material_override = ShaderMaterial.new()
+		hovering = false
+	func _on_mouse_clicked() -> void:
+		pass

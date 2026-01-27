@@ -6,12 +6,11 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gderf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gderf"]
-size = Vector3(1, 1, 0.05)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gderf"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_isq0c"]
-size = Vector3(1, 1, 1.7)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gderf"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egwgl"]
 albedo_color = Color(0, 0, 0, 1)
@@ -120,6 +119,7 @@ physics_material_override = SubResource("PhysicsMaterial_gderf")
 freeze = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.032, 0, 0, 0)
 shape = SubResource("BoxShape3D_gderf")
 
 [node name="OuterCase" type="MeshInstance3D" parent="RigidBody3D"]
@@ -128,11 +128,11 @@ mesh = SubResource("BoxMesh_gderf")
 skeleton = NodePath("../..")
 
 [node name="Area3D" type="Area3D" parent="RigidBody3D/OuterCase"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.4724662, 0, 0)
+transform = Transform3D(1.7271159, 0, 0, 0, 0.014642812, 0.64624643, 0, -33.32477, 0.75508094, 0.8151987, -0.0050235395, 11.432798)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D/OuterCase/Area3D"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.472, 0.041599013, -1.4109127e-08)
-shape = SubResource("BoxShape3D_isq0c")
+transform = Transform3D(0.57899994, 0, 0, 0, 0.035043318, -0.029992308, 0, 1.5466032, 0.0006795732, -0.472, 0.34307206, -9.313226e-10)
+shape = SubResource("ConcavePolygonShape3D_gderf")
 
 [node name="InnerCase" type="MeshInstance3D" parent="RigidBody3D"]
 transform = Transform3D(0.9144166, 0, 0, 0, 0.97815275, 0, 0, 0, 0.019025845, 0.044164777, 0, 0)

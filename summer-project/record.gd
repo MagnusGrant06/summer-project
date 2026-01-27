@@ -5,6 +5,7 @@ class_name Record extends Node3D
 @onready var camera = $"../../../Camera3D"
 @onready var parent_record = $"."
 @onready var disk = $RigidBody3D/RecordDisk
+@onready var physics_body : RigidBody3D = $RigidBody3D
 
 var base_position
 var base_rotation
@@ -16,6 +17,7 @@ func _ready() -> void:
 	base_position = global_position
 	base_rotation = global_rotation
 	record_state = RecordState.StoredRecord.new(dummy_record)
+	animator.play_backwards("reveal_record")
 
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()

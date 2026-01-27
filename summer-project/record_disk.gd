@@ -9,6 +9,7 @@ class_name RecordDisk extends Node3D
 @onready var camera = $"../../../../../Camera3D"
 @onready var case_animation = $"../../AnimationPlayer"
 @onready var case = $".."
+@onready var parent : Record = $"../.."
 
 var grabbed = false
 var hovering = false
@@ -54,7 +55,8 @@ func default_mouse_action() -> void:
 	if(Input.is_action_just_pressed("click") && revealed):
 		grabbed = true
 		default = false
-		case.freeze = false
+		parent.record_state = RecordState.EmptyRecord.new(parent)
+		Global.record_in_use = false
 		reparent(master_scene,true)
 		reset_disk()
 	if(Input.is_action_just_pressed("click") && !revealed):
