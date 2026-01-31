@@ -55,10 +55,13 @@ func default_mouse_action() -> void:
 	if(Input.is_action_just_pressed("click") && revealed):
 		grabbed = true
 		default = false
-		parent.record_state = RecordState.EmptyRecord.new(parent)
+		phyisics_hitbox.disabled = true
 		Global.record_in_use = false
+		print("clicked")
 		reparent(master_scene,true)
 		reset_disk()
+		if( !(parent.record_state is RecordState.EmptyRecord)):
+			parent.record_state = RecordState.EmptyRecord.new(parent)
 	if(Input.is_action_just_pressed("click") && !revealed):
 		case_animation.play("reveal_disk")
 		revealed = true
@@ -68,6 +71,7 @@ func default_mouse_action() -> void:
 
 func grabbed_mouse_action() -> void:
 	if(Input.is_action_just_pressed("right_click")):
+		phyisics_hitbox.disabled = false
 		grabbed = false
 		default = true
 		parent_body.freeze = false
@@ -93,9 +97,12 @@ func reset_disk() -> void:
 	parent_body.global_position = global_position
 	phyisics_hitbox.global_rotation = global_rotation - Vector3(PI/2,0.0,0.0)
 	
-func attach_body(parent: Node3D) -> void:
-	reparent(parent)
+func attach_body(current_parent: Node3D) -> void:
+	grabbed = false
+	default = true
+	reparent(current_parent)
+	parent_body.sleeping = true
 	parent_body.freeze = true
-	global_position = parent.disk_join.global_position
+	global_position = current_parent.disk_join.global_position
 	global_rotation = Vector3(PI/2,0.0,0.)
-	parent.disk_join.node_b = "."
+	current_parent.disk_join.node_b = "."

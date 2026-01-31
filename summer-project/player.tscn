@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6uttkpggem10"]
+[gd_scene format=3 uid="uid://c6uttkpggem10"]
 
 [ext_resource type="ArrayMesh" uid="uid://68ggu26ajt8r" path="res://godotasset.obj" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dnukcn01516kr" path="res://recordplayer.gd" id="1_onrkg"]
@@ -107,58 +107,56 @@ albedo_color = Color(0.48178947, 0.48178947, 0.48178947, 1)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hqtel"]
 data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[node name="Player" type="Node3D"]
+[node name="Player" type="Node3D" unique_id=1720348299]
 script = ExtResource("1_onrkg")
 
-[node name="playerbody" type="MeshInstance3D" parent="."]
+[node name="playerbody" type="MeshInstance3D" parent="." unique_id=1423391768]
 transform = Transform3D(0.5788716, 0, 0, 0, -0.007292226, -0.14921999, 0, 1.5474477, -0.0007031875, -0.4722928, 0.19198906, 0)
 mesh = ExtResource("1_4flbx")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="playerbody"]
+[node name="StaticBody3D" type="StaticBody3D" parent="playerbody" unique_id=1694288516]
 transform = Transform3D(1.7274988, 0, 0, 0, -0.003045219, 0.6462111, 0, -6.7013664, -0.031579662, 0.81588525, 0.00058464875, 1.286589)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="playerbody/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="playerbody/StaticBody3D" unique_id=7066842]
 transform = Transform3D(0.5788716, 0, 0, 0, -0.007292225, -0.14921999, 0, 1.5474477, -0.0007031875, -0.4722928, 0.19198906, -5.820766e-11)
 shape = SubResource("ConcavePolygonShape3D_onrkg")
 
-[node name="playerlid" type="MeshInstance3D" parent="."]
+[node name="playerlid" type="MeshInstance3D" parent="." unique_id=1242650290]
 transform = Transform3D(0.57899994, 0, 0, 0, 0.035043318, -0.029992307, 0, 1.5466032, 0.0006795731, -0.472, 0.34307206, 0)
 transparency = 0.65
 mesh = ExtResource("1_4flbx")
 skeleton = NodePath("../playerbody")
 
-[node name="Area3D" type="Area3D" parent="playerlid"]
+[node name="Area3D" type="Area3D" parent="playerlid" unique_id=1388042134]
 transform = Transform3D(1.7271159, 0, 0, 0, 0.014642812, 0.64624643, 0, -33.32477, 0.75508094, 0.8151987, -0.0050235395, 11.432798)
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="playerlid/Area3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="playerlid/Area3D" unique_id=1185384480]
 transform = Transform3D(0.57899994, 0, 0, 0, 0.03786434, -0.032604698, 0, 1.6711065, 0.0007387653, -0.472, 0.343072, 6.617445e-24)
 shape = SubResource("ConcavePolygonShape3D_i3pqv")
 
-[node name="CollectionArea" type="Area3D" parent="."]
+[node name="CollectionArea" type="Area3D" parent="." unique_id=1278772256]
 transform = Transform3D(1.2376333, 0, 0, 0, 1, 0, 0, 0, 1, -0.5037603, -0.3610168, 0)
 visible = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CollectionArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CollectionArea" unique_id=160595225]
 transform = Transform3D(1, 0, 0, 0, 0.19876528, 0, 0, 0, 1, 0, 0.76605225, 0)
 shape = SubResource("BoxShape3D_onrkg")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3253y")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1223000883]
+libraries/ = SubResource("AnimationLibrary_3253y")
 
-[node name="DiskJoin" type="PinJoint3D" parent="."]
+[node name="DiskJoin" type="PinJoint3D" parent="." unique_id=1261342244]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.54093975, 0.375, 0)
 node_a = NodePath("../playerbody/StaticBody3D")
 
-[node name="PlayButton" type="MeshInstance3D" parent="."]
+[node name="PlayButton" type="MeshInstance3D" parent="." unique_id=186844650]
 transform = Transform3D(1.1924881e-09, 0.1, 0, -0.1, 1.1924881e-09, 0, 0, 0, 0.022563424, -0.073611036, 0.18823299, 0.4462242)
 mesh = SubResource("PrismMesh_onrkg")
 surface_material_override/0 = SubResource("StandardMaterial3D_i3pqv")
 
-[node name="Area3D" type="Area3D" parent="PlayButton"]
+[node name="Area3D" type="Area3D" parent="PlayButton" unique_id=110348519]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayButton/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayButton/Area3D" unique_id=1166454969]
 transform = Transform3D(1.0000002, -8.881784e-16, 0, 8.881784e-16, 1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_hqtel")
 

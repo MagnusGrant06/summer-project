@@ -14,6 +14,8 @@ var currently_playing_song = false
 
 var playing_song : AudioStreamPlayer
 
+func _ready() -> void:
+	collection_area_hitbox.disabled = true
 func _process(_delta: float) -> void:
 	play_disk_music()
 	if(Input.is_action_just_pressed("click") && mouse_entered && lid_open):
