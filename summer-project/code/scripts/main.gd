@@ -3,6 +3,7 @@ var all_records = []
 var all_albums = MusicManager.get_albums()
 @onready var record_holder = $Shelf/Node3D
 
+#load music into individual records (currently has errors due to only 1 album being present)
 func _ready() -> void:
 	var i = 0
 	for child in record_holder.get_children():

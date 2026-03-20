@@ -21,13 +21,20 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://global.gd"
-MusicManager="*res://music_manager.gd"
+Global="*res://code/scripts/global.gd"
+MusicManager="*res://code/scripts/music_manager.gd"
+
+[display]
+
+window/size/mode=3
 
 [file_customization]
 
 folder_colors={
-"res://music/Dirt (2022 Remaster)/": "orange"
+"res://assets/": "green",
+"res://assets/music/Dirt (2022 Remaster)/": "orange",
+"res://code/": "blue",
+"res://scenes/": "purple"
 }
 
 [input]

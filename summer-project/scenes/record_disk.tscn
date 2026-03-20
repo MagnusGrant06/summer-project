@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://flkdql0wopio"]
 
-[ext_resource type="Script" uid="uid://c4mclo4hpj4cq" path="res://record_disk.gd" id="1_crfh5"]
+[ext_resource type="Script" uid="uid://c4mclo4hpj4cq" path="res://code/scripts/record_disk.gd" id="1_crfh5"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_crfh5"]
 height = 0.015

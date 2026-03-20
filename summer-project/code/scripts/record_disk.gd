@@ -1,6 +1,6 @@
 class_name RecordDisk extends Node3D
 
-@onready var hover_shader = load("res://hover_shader.gdshader")
+@onready var hover_shader = load("res://code/shaders/hover_shader.gdshader")
 @onready var mesh = $RigidBody3D/Disk
 @onready var parent_body = $RigidBody3D
 @onready var phyisics_hitbox = $RigidBody3D/CollisionShape3D
@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
 	check_for_input()
 	if(grabbed):
 		calculate_location()
-		global_rotation.z = 0.0
+		global_rotation.z = 0.0    #reset rotation on z axis to avoid warping
 
 
 func _on_area_3d_mouse_entered() -> void:
@@ -46,18 +46,19 @@ func _on_mouse_clicked() -> void:
 		default_mouse_action()
 
 func calculate_location() -> void:
-	var camera_space2 = camera.project_position(get_viewport().get_mouse_position(),arbitrary_z)
+	var camera_space2 = camera.project_position(get_viewport().get_mouse_position(),arbitrary_z)    #convert mouse position on screen to world position in scene
 	global_position = camera_space2
 	mesh.global_position = global_position
 	mesh.global_rotation = global_rotation + Vector3(PI/2,0.0,0.0)
 
+#very basic state machine changing mouse action depending on if the disk is grabbed or not
 func default_mouse_action() -> void:
 	if(Input.is_action_just_pressed("click") && revealed):
 		grabbed = true
 		default = false
 		phyisics_hitbox.disabled = true
 		Global.record_in_use = false
-		print("clicked")
+		#print("clicked")
 		reparent(master_scene,true)
 		reset_disk()
 		if( !(parent.record_state is RecordState.EmptyRecord)):
@@ -97,6 +98,7 @@ func reset_disk() -> void:
 	parent_body.global_position = global_position
 	phyisics_hitbox.global_rotation = global_rotation - Vector3(PI/2,0.0,0.0)
 	
+	#safe way to join disk to either main scene, record player, or back into record
 func attach_body(current_parent: Node3D) -> void:
 	grabbed = false
 	default = true

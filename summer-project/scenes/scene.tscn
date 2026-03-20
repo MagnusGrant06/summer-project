@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://i3sr46hwksgx"]
 
-[ext_resource type="Script" uid="uid://b37lr06jt043t" path="res://main.gd" id="1_u3cyc"]
-[ext_resource type="PackedScene" uid="uid://bey4vq0vq4132" path="res://shelf.tscn" id="2_nxogm"]
-[ext_resource type="PackedScene" uid="uid://dbnp2l6dop46p" path="res://record.tscn" id="3_3253y"]
-[ext_resource type="PackedScene" uid="uid://c6uttkpggem10" path="res://player.tscn" id="3_u3cyc"]
+[ext_resource type="Script" uid="uid://b37lr06jt043t" path="res://code/scripts/main.gd" id="1_u3cyc"]
+[ext_resource type="PackedScene" uid="uid://bey4vq0vq4132" path="res://scenes/shelf.tscn" id="2_nxogm"]
+[ext_resource type="PackedScene" uid="uid://dbnp2l6dop46p" path="res://scenes/record.tscn" id="3_3253y"]
+[ext_resource type="PackedScene" uid="uid://c6uttkpggem10" path="res://scenes/player.tscn" id="3_u3cyc"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_drvgu"]
 

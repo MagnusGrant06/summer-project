@@ -1,12 +1,13 @@
 extends Node3D
 @onready var lid_animation = $AnimationPlayer
-@onready var hover_shader = load("res://hover_shader.gdshader")
+@onready var hover_shader = load("res://code/shaders/hover_shader.gdshader")
 @onready var lid = $playerlid
 @onready var collection_area_hitbox = $CollectionArea/CollisionShape3D
 @onready var collection_area = $CollectionArea
 @onready var disk_join = $DiskJoin
 @onready var play_button_collision = $PlayButton/CollisionShape3D
 
+#flags for changing player state
 var mouse_entered = false
 var lid_open = false
 var play_botton_pressed = false
@@ -16,6 +17,7 @@ var playing_song : AudioStreamPlayer
 
 func _ready() -> void:
 	collection_area_hitbox.disabled = true
+
 func _process(_delta: float) -> void:
 	play_disk_music()
 	if(Input.is_action_just_pressed("click") && mouse_entered && lid_open):
@@ -41,6 +43,7 @@ func _on_area_3d_mouse_exited() -> void:
 	mouse_entered = false
 	
 
+#check for disks entering area
 func _on_collection_area_body_entered(body: Node3D) -> void:
 	var body_record = body.get_parent()
 	if(!(body_record is RecordDisk)):
@@ -55,6 +58,7 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 
 var i : int = 0
 
+#play current disks music
 func play_disk_music() -> void:
 	if(!play_botton_pressed):
 		return
@@ -62,13 +66,13 @@ func play_disk_music() -> void:
 	if( !(disk_child is RecordDisk) ):
 		return
 	var current_songs : Array[AudioStreamPlayer] = disk_child.album.songs
-	disk_child.global_rotation.y += deg_to_rad(0.0001)
+	disk_child.global_rotation.y += deg_to_rad(0.0001)    #spin record disk whilst playing
 	playing_song = current_songs[i]
-	if(playing_song.finished.get_connections().size() <1):
+	if(playing_song.finished.get_connections().size() <1):     #connect logic for going to next song once one is finished
 		playing_song.finished.connect(_on_song_finished)
 	if(!playing_song.playing):
 		playing_song.play()
-	if(Input.is_action_just_pressed("skip")):
+	if(Input.is_action_just_pressed("skip")):    #user input for changing songs
 		playing_song.stop()
 		i+=1
 

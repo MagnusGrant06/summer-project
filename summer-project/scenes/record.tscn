@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://dbnp2l6dop46p"]
+[gd_scene format=3 uid="uid://dbnp2l6dop46p"]
 
-[ext_resource type="Script" uid="uid://cqpa0dsi3vgxp" path="res://record.gd" id="1_egwgl"]
-[ext_resource type="PackedScene" uid="uid://flkdql0wopio" path="res://record_disk.tscn" id="2_isq0c"]
+[ext_resource type="Script" uid="uid://cqpa0dsi3vgxp" path="res://code/scripts/record.gd" id="1_egwgl"]
+[ext_resource type="PackedScene" uid="uid://flkdql0wopio" path="res://scenes/record_disk.tscn" id="2_isq0c"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gderf"]
 

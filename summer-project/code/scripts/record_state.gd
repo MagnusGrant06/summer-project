@@ -1,3 +1,4 @@
+#state machine for altering records actions
 @abstract
 class_name RecordState extends Node
 var parent
@@ -8,12 +9,14 @@ func _on_area_3d_mouse_exited() -> void
 @abstract
 func _on_mouse_clicked() -> void
 
-
+#functionality record inside shelf/ at rest
 class StoredRecord extends RecordState:
 	var hovering = false
 	func _init(parent_record : Record) -> void:
 		parent = parent_record
 		
+	#this functionality you will see everywhere (minus the animator),
+	#it is for applying a shader to signal to the user what they are hovering over
 	func _on_area_3d_mouse_entered() -> void:
 		var newShader = ShaderMaterial.new()
 		newShader.shader = parent.hover_shader
@@ -29,6 +32,7 @@ class StoredRecord extends RecordState:
 		parent.animator.play_backwards("reveal_record")
 		hovering = false
 
+	#when record is at rest, we want to view it when clicked
 	func _on_mouse_clicked() -> void:
 		if(Input.is_action_just_pressed("click") && hovering && !Global.record_in_use):
 			#var target_vector = Vector3(1.087,1.069,2.226)
@@ -40,7 +44,7 @@ class StoredRecord extends RecordState:
 			parent.record_state = ViewingRecord.new(parent)
 			Global.record_in_use = true
 
-
+#functionality for when we want to view and use a record
 class ViewingRecord extends RecordState:
 	var hovering = false
 	var disk_peeked = false
@@ -53,9 +57,14 @@ class ViewingRecord extends RecordState:
 		newShader.shader = parent.hover_shader
 		parent.case.material_override = newShader
 		hovering = true
+
 	func _on_area_3d_mouse_exited() -> void:
 		parent.case.material_override = ShaderMaterial.new()
 		hovering = false
+
+	#more complicated mouse action than base record class,
+	#as we need to have multiple actions and options for the user to choose from
+	#possible TODO create a more clear tree like structure for viewing, grabbing, or vice versa the disk
 	func _on_mouse_clicked() -> void:
 		if(!hovering):
 			return
@@ -76,13 +85,16 @@ class ViewingRecord extends RecordState:
 			parent.global_rotation += Vector3(0.0,1.0/6.0,0.0)
 		if(Input.is_action_just_pressed("scroll_down")):
 			parent.global_rotation -= Vector3(0.0,1.0/6.0,0.0)
+			
+
+#functionality for when the disk has been grabbed and the record is no longer being viewed
 class EmptyRecord extends RecordState:
 	var hovering = false
 	
 	func _init(parent_record : Record) -> void:
 		parent = parent_record
 		parent.physics_body.freeze = false
-		parent.physics_body.apply_central_force(Vector3(190.0,0.0,-190.0))
+		parent.physics_body.apply_central_force(Vector3(190.0,0.0,-190.0)) #apply a force to send the record to the table
 
 	func _on_area_3d_mouse_entered() -> void:
 		var newShader = ShaderMaterial.new()
