@@ -11,30 +11,36 @@ func _on_mouse_clicked() -> void
 
 #functionality record inside shelf/ at rest
 class StoredRecord extends RecordState:
-	var hovering = false
+	var record_hovering = false
 	func _init(parent_record : Record) -> void:
 		parent = parent_record
 		
 	#this functionality you will see everywhere (minus the animator),
 	#it is for applying a shader to signal to the user what they are hovering over
 	func _on_area_3d_mouse_entered() -> void:
+		record_hovering = true
 		var newShader = ShaderMaterial.new()
 		newShader.shader = parent.hover_shader
 		parent.case.material_override = newShader
 		if(!parent.animator.is_playing()):
 			parent.animator.play("reveal_record")
-		hovering = true
+			if(!parent.animator.animation_finished.is_connected(_play_backwards_anim)):
+				parent.animator.animation_finished.connect(_play_backwards_anim)
 
 	func _on_area_3d_mouse_exited() -> void:
+		record_hovering = false
 		parent.case.material_override = ShaderMaterial.new()
-		if(parent.animator.is_playing()):
-			await parent.animator.animation_finished
+		if(parent.animator.animation_finished.get_connections().size() > 0 && !parent.animator.is_playing()):
+			_play_backwards_anim("help")
+
+	func _play_backwards_anim(_anim_name : String) -> void:
+		if(record_hovering): return
 		parent.animator.play_backwards("reveal_record")
-		hovering = false
+		parent.animator.animation_finished.disconnect(_play_backwards_anim)
 
 	#when record is at rest, we want to view it when clicked
 	func _on_mouse_clicked() -> void:
-		if(Input.is_action_just_pressed("click") && hovering && !Global.record_in_use):
+		if(Input.is_action_just_pressed("click") && record_hovering && !Global.record_in_use):
 			#var target_vector = Vector3(1.087,1.069,2.226)
 			var target_vector = (parent.camera.global_position*0.65)+Vector3(0.0,0.3,0.0)
 			parent.global_position = target_vector

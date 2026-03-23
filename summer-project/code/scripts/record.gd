@@ -13,7 +13,7 @@ var base_position
 var base_rotation
 var dummy_record
 
-var record_state
+var record_state : RecordState
 func _ready() -> void:
 	dummy_record = self
 	base_position = global_position

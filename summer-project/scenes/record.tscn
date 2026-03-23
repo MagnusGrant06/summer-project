@@ -112,40 +112,38 @@ _data = {
 &"test": SubResource("Animation_fx2x7")
 }
 
-[node name="Record" type="Node3D"]
+[node name="Record" type="Node3D" unique_id=1310224358]
 script = ExtResource("1_egwgl")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1219503440]
 physics_material_override = SubResource("PhysicsMaterial_gderf")
 freeze = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=356266645]
 shape = SubResource("BoxShape3D_gderf")
 
-[node name="OuterCase" type="MeshInstance3D" parent="RigidBody3D"]
+[node name="OuterCase" type="MeshInstance3D" parent="RigidBody3D" unique_id=1294565691]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.03244384, 0, 0, 0)
 mesh = SubResource("BoxMesh_gderf")
 skeleton = NodePath("../..")
 
-[node name="Area3D" type="Area3D" parent="RigidBody3D/OuterCase"]
+[node name="Area3D" type="Area3D" parent="RigidBody3D/OuterCase" unique_id=1157292496]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.4724662, 0, 0)
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D/OuterCase/Area3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D/OuterCase/Area3D" unique_id=751754469]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.472, 0.041599013, -1.4109127e-08)
 shape = SubResource("BoxShape3D_isq0c")
 
-[node name="InnerCase" type="MeshInstance3D" parent="RigidBody3D"]
+[node name="InnerCase" type="MeshInstance3D" parent="RigidBody3D" unique_id=1661761456]
 transform = Transform3D(0.9144166, 0, 0, 0, 0.97815275, 0, 0, 0, 0.019025845, 0.044164777, 0, 0)
 mesh = SubResource("BoxMesh_gderf")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_egwgl")
 
-[node name="RecordDisk" parent="RigidBody3D" instance=ExtResource("2_isq0c")]
+[node name="RecordDisk" parent="RigidBody3D" unique_id=1385990100 instance=ExtResource("2_isq0c")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_isq0c")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1010097397]
+libraries/ = SubResource("AnimationLibrary_isq0c")
 speed_scale = 1.2
 
 [connection signal="mouse_entered" from="RigidBody3D/OuterCase/Area3D" to="." method="_on_area_3d_mouse_entered"]
