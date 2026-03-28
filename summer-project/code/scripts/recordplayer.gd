@@ -20,6 +20,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	play_disk_music()
+	check_for_disks()
 	if(Input.is_action_just_pressed("click") && mouse_entered && lid_open):
 		lid_animation.play_backwards("lid_open")
 		lid_open = false
@@ -43,13 +44,16 @@ func _on_area_3d_mouse_exited() -> void:
 	mouse_entered = false
 	
 
-#check for disks entering area
-func _on_collection_area_body_entered(body: Node3D) -> void:
-	var body_record = body.get_parent()
-	if(!(body_record is RecordDisk)):
-		return
-	body_record.attach_body(self)
-
+#check for disks entering zone to grab
+#Possible TODO optimize
+func check_for_disks() -> void:
+	if(!lid_open): return
+	for node : Node3D in collection_area.get_overlapping_bodies():
+		if(!is_instance_of(node.get_parent(),RecordDisk)):continue
+		if(node.get_parent().grabbed):continue
+		node.get_parent().attach_body(self)
+		print(node.get_parent().global_position)
+		print(disk_join.global_position)
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if (event.is_action_pressed("click")):
