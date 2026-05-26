@@ -25,8 +25,6 @@ func _process(_delta: float) -> void:
 	if(grabbed):
 		var camera_space2 = camera.project_position(get_viewport().get_mouse_position(),arbitrary_z)
 		parent_body.set_mouse_pos(camera_space2)
-	if(is_instance_of(parent.record_state,RecordState.EmptyRecord)):
-		print(parent_body.global_position)
 
 func _on_area_3d_mouse_entered() -> void:
 	var newShader = ShaderMaterial.new()
