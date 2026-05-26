@@ -5,7 +5,7 @@ var all_albums = MusicManager.get_albums()
 
 #load music into individual records (currently has errors due to only 1 album being present)
 func _ready() -> void:
-	MusicManager.initialize_user_token()
+	MusicManager.start_auth()
 	var i = 0
 	for child in record_holder.get_children():
 		child.disk.album = all_albums[i]
