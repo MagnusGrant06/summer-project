@@ -57,6 +57,8 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 	if (event.is_action_pressed("click")):
 		lid_animation.play("press_play")
 		play_botton_pressed  = true
+		MusicManager.search_albums("badmotrfinge")
+		
 
 var i : int = 0
 
