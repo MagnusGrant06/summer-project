@@ -33,30 +33,32 @@ func get_albums() -> Array[Album]:
 	return all_albums
 
 
-#func _process(_delta: float) -> void:
-	#if(_server.is_listening() && _server.is_connection_available()):
-		#var peer : StreamPeerTCP = _server.take_connection()
-		#await get_tree().create_timer(10.0).timeout
-		#var request : String = peer.get_utf8_string(2048)
-		#
-		#var response: String = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" + \
-			#"<html><body>Logged in! You can close this tab.</body></html>"
-		#peer.put_data(response.to_utf8_buffer())
-		#
-		#_server.stop()
-		#print("Caught redirect:")
-		#print(request)
+## Initialize users credentials with spotify API to allow for http requests
+func start_auth():
+	access_token = ""
+	_code_verifier = generate_code_verifier()
+	var challenge : String = generate_code_challenge(_code_verifier)
+	
+	var url : String = "https://accounts.spotify.com/authorize" + \
+		"?client_id=" + CLIENT_ID + \
+		"&response_type=code" + \
+		"&redirect_uri=" + REDIRECT_URI.uri_encode() + \
+		"&scope=" + SCOPES.uri_encode() + \
+		"&code_challenge_method=S256" + \
+		"&code_challenge=" + challenge
+	
+	OS.shell_open(url)
+	_server.listen(8888)
+	print("browser opened listning")
+	_poll_for_connection()
+	
 
+##check for connections until one is found, then connect user to spotify
 func _poll_for_connection():
-	print("Starting poll loop")
 	while not _server.is_connection_available():
 		await get_tree().create_timer(0.1).timeout
 	
-	print("Connection available!")
-	
 	var peer : StreamPeerTCP = _server.take_connection()
-	
-	print("Peer status: " + str(peer.get_status()))
 	
 	await get_tree().create_timer(1.0).timeout
 	var request : String = ""
@@ -76,42 +78,97 @@ func _poll_for_connection():
 	
 	_server.stop()
 	print("Caught redirect:")
-	print(request)
+	var code :String = extract_user_code(request)
+	print(code)
+	exchange_code_for_token(code)
+	#check_token_scopes()
+	
+#func check_token_scopes():
+		#var http: HTTPRequest = HTTPRequest.new()
+		#add_child(http)
+		#http.request_completed.connect(func(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+			#print("Token info: " + body.get_string_from_utf8())
+		#)
+		#
+		#var headers: Array = [
+			#"Authorization: Bearer " + access_token
+		#]
+		#
+		#http.request(
+			#"https://api.spotify.com/v1/me",
+			#headers
+		#)
+
+##helper method to extract user credentials from http request
+func extract_user_code(request : String) -> String:
+	var first_line : String = request.split("\n")[0]
+	var after_code : String = first_line.split("code=")[1]
+	var code: String = after_code.split(" ")[0]
+	
+	return code
 	
 
-
-## Initialize users credentials with spotify API to allow for http requests
-func start_auth():
-	_code_verifier = generate_code_verifier()
-	var challenge : String = generate_code_challenge(_code_verifier)
+func exchange_code_for_token(code : String):
+	var http_request : HTTPRequest = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_token_exchanged)
+	var headers : Array = ["Content-Type: application/x-www-form-urlencoded"]
 	
-	var url : String = "https://accounts.spotify.com/authorize" + \
-		"?client_id=" + CLIENT_ID + \
-		"&response_type=code" + \
+	var body: String = "grant_type=authorization_code" + \
+		"&code=" + code + \
 		"&redirect_uri=" + REDIRECT_URI.uri_encode() + \
-		"&scope=" + SCOPES.uri_encode() + \
-		"&code_challenge_method=S256" + \
-		"&code_challenge=" + challenge
+		"&client_id=" + CLIENT_ID + \
+		"&code_verifier=" + _code_verifier
 	
-	OS.shell_open(url)
-	_server.listen(8888)
-	print("browser opened listning")
-	_poll_for_connection()
+	var error : Error = http_request.request(
+		"https://accounts.spotify.com/api/token",
+		headers,
+		HTTPClient.METHOD_POST,
+		body
+	)
+	
+	if(error != OK):
+		push_error("token exchange request failed")
+	
 
-###helper method to intialize user credentials
-#func _on_token_received(result, response_code, _headers, body):
-	#if(result != HTTPRequest.RESULT_SUCCESS):
-		#push_error("Token request failed")
-	#if(response_code != 200):
-		#push_error("Spotify rejected token request, code: " + str(response_code))
-		#return
-	#
-	#var data = JSON.parse_string(body.get_string_from_utf8())
-	#access_token = data["access_token"]
 
+func _on_token_exchanged(result, response_code, headers, body):
+	if(result != HTTPRequest.RESULT_SUCCESS):
+		push_error("Token exchange failed")
+		return
+	
+	if(response_code != 200):
+		push_error("Response code: " + str(response_code))
+		push_error(body.get_string_from_utf8())
+		return;
+	
+	var data : Dictionary = JSON.parse_string(body.get_string_from_utf8())
+	access_token = data["access_token"]
+	print("Access token: " + access_token)
+	test_playback()
+
+func test_playback():
+	var http_request : HTTPRequest = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(func(result,code,h,body):
+		print("Result: " + str(result))
+		print("Playback response: " + str(code))
+		print("Body: " + body.get_string_from_utf8())
+		)
+	
+	var headers: Array = [
+		"Authorization: Bearer " + access_token,
+		"Content-Type: application/json"
+	]
+	
+	http_request.request(
+		"https://api.spotify.com/v1/me/player/play",
+		headers,
+		HTTPClient.METHOD_PUT,
+		"{}"
+	)
 ## Search spotify database with user query and fill array of dictionaries
 ##containing search results
-
 func search_albums(query : String):
 	var http_request : HTTPRequest = HTTPRequest.new();
 	add_child(http_request);
@@ -192,6 +249,8 @@ func generate_code_challenge(verifier: String) -> String:
 	
 	return Marshalls.raw_to_base64(hash) \
 	 .replace("+", "-").replace("/","_").replace("=","")
+
+
 #class for holding music information
 #TODO add album image and metadata
 class Album:
