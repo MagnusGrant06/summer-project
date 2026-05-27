@@ -28,7 +28,6 @@ MusicManager="*res://code/scripts/music_manager.gd"
 
 folder_colors={
 "res://assets/": "green",
-"res://assets/music/Dirt (2022 Remaster)/": "orange",
 "res://code/": "blue",
 "res://scenes/": "purple"
 }

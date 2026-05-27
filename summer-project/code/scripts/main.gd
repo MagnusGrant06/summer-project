@@ -1,14 +1,6 @@
 extends Node3D
-var all_records = []
-var all_albums = MusicManager.get_albums()
 @onready var record_holder = $Shelf/Node3D
 
 #load music into individual records (currently has errors due to only 1 album being present)
 func _ready() -> void:
-	MusicManager.start_auth()
-	var i = 0
-	for child in record_holder.get_children():
-		child.disk.album = all_albums[i]
-		for song in child.disk.album.songs:
-			child.disk.add_child(song)
-		all_records.append(child)
+	MusicManager.test_request()
