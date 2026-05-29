@@ -158,6 +158,32 @@ func create_api_request(request_type : HTTPClient.Method, uri : String, body : S
 	return JSON.parse_string(request[3].get_string_from_utf8())
 	
 
+func get_image(url : String) -> Image:
+	var http_request : HTTPRequest = HTTPRequest.new()
+	add_child(http_request)
+	
+	var error : Error = http_request.request(url)
+	
+	if(error != OK):
+		push_error("API Request error: " + str(error))
+	
+	var request :Array = await http_request.request_completed
+	http_request.queue_free()
+	
+	if(request[0] != HTTPRequest.RESULT_SUCCESS):
+		push_error("API Request Failed on Godot side: " + str(request[0]))
+	
+	if(request[1] != 200):
+		push_error("API Request Failed on Spotify side: " + str(request[1]))
+	
+	var image : Image = Image.new()
+	var error2 : Error = image.load_jpg_from_buffer(request[3])
+	if(error2 != OK):
+		push_error("couldnt load image")
+		return null
+	return image
+	
+	
 
 ##basic cryptography to convert user credentials into a format spotify will accept
 func generate_code_verifier() -> String:

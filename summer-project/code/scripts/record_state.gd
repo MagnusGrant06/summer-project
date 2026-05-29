@@ -1,13 +1,41 @@
 #state machine for altering records actions
 @abstract
-class_name RecordState extends Node
-var parent
+class_name RecordState extends RefCounted
+var parent : Record
 @abstract
 func _on_area_3d_mouse_entered() -> void
 @abstract
 func _on_area_3d_mouse_exited() -> void
 @abstract
 func _on_mouse_clicked() -> void
+
+class DisplayRecord extends RecordState:
+	var record_hovering = false
+	func _init(parent_record : Record):
+		parent = parent_record
+	
+	func _on_area_3d_mouse_entered():
+		record_hovering = true
+		var newShader = ShaderMaterial.new()
+		newShader.shader = parent.hover_shader
+		parent.case.material_overlay = newShader
+		parent.image_plane.material_overlay = newShader
+	
+	func _on_area_3d_mouse_exited() -> void:
+		record_hovering = false
+		parent.case.material_overlay = ShaderMaterial.new()
+		parent.image_plane.material_overlay = ShaderMaterial.new()
+	
+	#when record is at rest, we want to view it when clicked
+	func _on_mouse_clicked() -> void:
+		if(Input.is_action_just_pressed("click") && record_hovering && !Global.record_in_use):
+			#var target_vector = Vector3(1.087,1.069,2.226)
+			var target_vector = (parent.camera.global_position*0.65)+Vector3(0.0,0.3,0.0)
+			parent.global_position = target_vector
+			parent.global_rotation = parent.camera.global_rotation
+			parent.animator.stop()
+			parent.record_state = ViewingRecord.new(parent)
+			Global.record_in_use = true
 
 #functionality record inside shelf/ at rest
 class StoredRecord extends RecordState:
@@ -21,7 +49,8 @@ class StoredRecord extends RecordState:
 		record_hovering = true
 		var newShader = ShaderMaterial.new()
 		newShader.shader = parent.hover_shader
-		parent.case.material_override = newShader
+		parent.case.material_overlay = newShader
+		parent.image_plane.material_overlay = newShader
 		if(!parent.animator.is_playing()):
 			parent.animator.play("reveal_record")
 			if(!parent.animator.animation_finished.is_connected(_play_backwards_anim)):
@@ -29,7 +58,8 @@ class StoredRecord extends RecordState:
 
 	func _on_area_3d_mouse_exited() -> void:
 		record_hovering = false
-		parent.case.material_override = ShaderMaterial.new()
+		parent.case.material_overlay = ShaderMaterial.new()
+		parent.image_plane.material_overlay = ShaderMaterial.new()
 		if(parent.animator.animation_finished.get_connections().size() > 0 && !parent.animator.is_playing()):
 			_play_backwards_anim("help")
 
@@ -46,7 +76,6 @@ class StoredRecord extends RecordState:
 			parent.global_position = target_vector
 			parent.global_rotation = parent.camera.global_rotation
 			parent.animator.stop()
-			queue_free()
 			parent.record_state = ViewingRecord.new(parent)
 			Global.record_in_use = true
 
@@ -61,11 +90,13 @@ class ViewingRecord extends RecordState:
 	func _on_area_3d_mouse_entered() -> void:
 		var newShader = ShaderMaterial.new()
 		newShader.shader = parent.hover_shader
-		parent.case.material_override = newShader
+		parent.case.material_overlay = newShader
+		parent.image_plane.material_overlay = newShader
 		hovering = true
 
 	func _on_area_3d_mouse_exited() -> void:
-		parent.case.material_override = ShaderMaterial.new()
+		parent.case.material_overlay = ShaderMaterial.new()
+		parent.image_plane.material_overlay = ShaderMaterial.new()
 		hovering = false
 
 	#more complicated mouse action than base record class,
@@ -77,8 +108,7 @@ class ViewingRecord extends RecordState:
 		if(Input.is_action_just_pressed("right_click")):
 			parent.global_position = parent.base_position
 			parent.global_rotation = parent.base_rotation
-			queue_free()
-			parent.record_state = StoredRecord.new(parent)
+			parent.record_state = parent.base_state
 			Global.record_in_use = false
 		if(Input.is_action_just_pressed("click")):
 			if(!parent.animator.is_playing() && !disk_peeked):
@@ -105,10 +135,12 @@ class EmptyRecord extends RecordState:
 	func _on_area_3d_mouse_entered() -> void:
 		var newShader = ShaderMaterial.new()
 		newShader.shader = parent.hover_shader
-		parent.case.material_override = newShader
+		parent.case.material_overlay = newShader
+		parent.image_plane.material_overlay = newShader
 		hovering = true
 	func _on_area_3d_mouse_exited() -> void:
-		parent.case.material_override = ShaderMaterial.new()
+		parent.case.material_overlay = ShaderMaterial.new()
+		parent.image_plane.material_overlay = ShaderMaterial.new()
 		hovering = false
 	func _on_mouse_clicked() -> void:
 		pass
