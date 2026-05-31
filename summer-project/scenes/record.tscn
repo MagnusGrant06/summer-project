@@ -16,6 +16,9 @@ size = Vector3(1, 1, 1.7)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egwgl"]
 albedo_color = Color(0, 0, 0, 1)
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_r8o5k"]
+size = Vector2(1, 1)
+
 [sub_resource type="Animation" id="Animation_w6ejl"]
 length = 0.001
 tracks/0/type = "value"
@@ -120,6 +123,7 @@ physics_material_override = SubResource("PhysicsMaterial_gderf")
 freeze = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=356266645]
+visible = false
 shape = SubResource("BoxShape3D_gderf")
 
 [node name="OuterCase" type="MeshInstance3D" parent="RigidBody3D" unique_id=1294565691]
@@ -141,6 +145,11 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_egwgl")
 
 [node name="RecordDisk" parent="RigidBody3D" unique_id=1385990100 instance=ExtResource("2_isq0c")]
+
+[node name="ImagePlane" type="MeshInstance3D" parent="RigidBody3D" unique_id=366681289]
+transform = Transform3D(1, 0, 0, 0, -5.364083e-10, -1, 0, 0.0122715905, -4.371139e-08, 0, 0, 0.017066643)
+mesh = SubResource("PlaneMesh_r8o5k")
+skeleton = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1010097397]
 libraries/ = SubResource("AnimationLibrary_isq0c")
