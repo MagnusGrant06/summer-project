@@ -2,8 +2,9 @@ extends Node
 var all_albums : Array[Album] = []
 var music_directory : String = "res://assets/music/"
 
+##initialize display records with set choices to show user how to play music
+##TODO be changed at runtime by user
 func initialize_display_records():
-	
 	var request : SpotifyRequests = SpotifyRequests.new()
 	add_child(request)
 	await request.start_auth()
@@ -25,7 +26,6 @@ func initialize_display_records():
 	
 
 #class for holding music information
-#TODO add album image and metadata
 class Album:
 	var album_cover : Image
 	var info : Dictionary

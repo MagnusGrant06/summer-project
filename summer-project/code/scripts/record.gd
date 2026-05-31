@@ -2,7 +2,7 @@ class_name Record extends Node3D
 #base class to hold state information and pass information from main scene
 
 @onready var hover_shader = load("res://code/shaders/hover_shader.gdshader")
-@onready var case = $RigidBody3D/OuterCase
+@onready var case : MeshInstance3D = $RigidBody3D/OuterCase
 @onready var animator = $AnimationPlayer
 @onready var camera = $"../../../Camera3D"
 @onready var parent_record = $"."

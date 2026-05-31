@@ -11,9 +11,6 @@ var _server : TCPServer = TCPServer.new()
 var access_token : String = ""
 var search_results : Array = []
 
-#func _init():
-	#auth_completed.connect(_on_token_exchanged)
-
 ## Initialize users credentials with spotify API to allow for http requests
 func start_auth():
 	access_token = ""
@@ -44,6 +41,7 @@ func _poll_for_connection():
 	await get_tree().create_timer(1.0).timeout
 	var request : String = ""
 	var attempts : int = 0
+	#wait until user connects or out of attempts
 	while request == "" and attempts < 20:
 		var bytes: int = peer.get_available_bytes()
 		if(bytes > 0):
@@ -52,7 +50,7 @@ func _poll_for_connection():
 		await get_tree().create_timer(0.1).timeout
 		attempts +=1
 	
-	
+	#empty hmtl page to confirm login to user
 	var response: String = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" + \
          "<html><body>Logged in! You can close this tab.</body></html>"
 	peer.put_data(response.to_utf8_buffer())
@@ -91,7 +89,6 @@ func exchange_code_for_token(code : String):
 	)
 	
 	var request : Array = await http_request.request_completed
-	
 	if(error != OK):
 		push_error("token exchange request failed")
 	
@@ -108,23 +105,9 @@ func exchange_code_for_token(code : String):
 	access_token = data["access_token"]
 	print("Access token: " + access_token)
 	
-	
 
-func _on_token_exchanged(result, response_code, _headers, body):
-	if(result != HTTPRequest.RESULT_SUCCESS):
-		push_error("Token exchange failed")
-		return
-	
-	if(response_code != 200):
-		push_error("Response code: " + str(response_code))
-		push_error(body.get_string_from_utf8())
-		return;
-	
-	var data : Dictionary = JSON.parse_string(body.get_string_from_utf8())
-	access_token = data["access_token"]
-	print("Access token: " + access_token)
-
-
+## primary method to create api requests with the spotify API
+## allows for getting album/artist/song info, play tracks, etc
 func create_api_request(request_type : HTTPClient.Method, uri : String, body : String = "" ):
 	var http_request : HTTPRequest = HTTPRequest.new()
 	add_child(http_request)
@@ -145,19 +128,18 @@ func create_api_request(request_type : HTTPClient.Method, uri : String, body : S
 	
 	var request :Array = await http_request.request_completed
 	http_request.queue_free()
-	
+
 	if(request[0] != HTTPRequest.RESULT_SUCCESS):
 		push_error("API Request Failed on Godot side: " + str(request[0]))
-	
 	if(request[1] != 200):
 		push_error("API Request Failed on Spotify side: " + str(request[1]))
 	
 	print("result: " + str(request[0]))
 	print("response code " + str(request[1]))
-	#print(request)
 	return JSON.parse_string(request[3].get_string_from_utf8())
 	
 
+##secondary api method unrelated to spotify to get images that dont need authorisation
 func get_image(url : String) -> Image:
 	var http_request : HTTPRequest = HTTPRequest.new()
 	add_child(http_request)
@@ -172,7 +154,6 @@ func get_image(url : String) -> Image:
 	
 	if(request[0] != HTTPRequest.RESULT_SUCCESS):
 		push_error("API Request Failed on Godot side: " + str(request[0]))
-	
 	if(request[1] != 200):
 		push_error("API Request Failed on Spotify side: " + str(request[1]))
 	
