@@ -13,6 +13,7 @@ func setup_display_albums():
 		if(!record.name.contains("Display")):
 			continue
 		record.album = MusicManager.all_albums[i]
+		record.disk.music = record.album.track_list
 		
 		#setup album image using image plane
 		var album_cover : Image = MusicManager.all_albums[i].album_cover

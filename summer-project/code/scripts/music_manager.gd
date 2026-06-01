@@ -1,13 +1,12 @@
 extends Node
 var all_albums : Array[Album] = []
 var music_directory : String = "res://assets/music/"
-
+var request_creator : SpotifyRequests = SpotifyRequests.new()
 ##initialize display records with set choices to show user how to play music
 ##TODO be changed at runtime by user
 func initialize_display_records():
-	var request : SpotifyRequests = SpotifyRequests.new()
-	add_child(request)
-	await request.start_auth()
+	add_child(request_creator)
+	await request_creator.start_auth()
 	
 	var album_ids : Array = [
 		"2W6MaUiInBkna5DfBES4E3", #badmotorfinger by soundgarden
@@ -19,12 +18,21 @@ func initialize_display_records():
 	]
 	
 	for id : String in album_ids:
-		var album_dict : Dictionary = await request.create_api_request(HTTPClient.METHOD_GET,"/albums/" + id);
+		var album_dict : Dictionary = await request_creator.create_api_request(HTTPClient.METHOD_GET,"/albums/" + id);
 		var track_list : Array = album_dict["tracks"]["items"]
-		var album_cover : Image = await request.get_image(album_dict["images"][0]["url"])
+		var album_cover : Image = await request_creator.get_image(album_dict["images"][0]["url"])
 		all_albums.append(Album.new( album_cover, album_dict,track_list))
-	
 
+func play_album(tracks : Array):
+	if(tracks == null):
+		return
+	
+	request_creator.create_api_request(HTTPClient.METHOD_PUT, "me/player/play", JSON.stringify({"uris": [tracks[0]["uri"]]}))
+	var i = 1
+	while i < tracks.size():
+		await request_creator.create_api_request(HTTPClient.METHOD_POST, "me/player/queue?uri=" + tracks[i]["uri"].uri_encode(), "{}")
+		i+=1
+	
 #class for holding music information
 class Album:
 	var album_cover : Image

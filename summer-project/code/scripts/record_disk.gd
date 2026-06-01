@@ -17,7 +17,7 @@ var revealed = false
 var default = true
 var arbitrary_z = 1.0
 
-var album : MusicManager.Album
+var music : Array
 
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()
@@ -80,7 +80,8 @@ func grabbed_mouse_action() -> void:
 func reset_disk() -> void:
 	parent_body.global_position = global_position
 	phyisics_hitbox.global_rotation = global_rotation - Vector3(PI/2,0.0,0.0)
-	#safe way to join disk to either main scene, record player, or back into record
+
+#safe way to join disk to either main scene, record player, or back into record
 func attach_body(new_parent: Node3D) -> void:
 	grabbed = false
 	default = true

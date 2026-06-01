@@ -19,7 +19,6 @@ func _ready() -> void:
 	collection_area_hitbox.disabled = true
 
 func _process(_delta: float) -> void:
-	play_disk_music()
 	check_for_disks()
 	if(Input.is_action_just_pressed("click") && mouse_entered && lid_open):
 		lid_animation.play_backwards("lid_open")
@@ -56,28 +55,17 @@ func check_for_disks() -> void:
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if (event.is_action_pressed("click")):
 		lid_animation.play("press_play")
-		play_botton_pressed  = true
+		play_disk_music()
 		
 
 var i : int = 0
 
 #play current disks music
 func play_disk_music() -> void:
-	if(!play_botton_pressed):
-		return
 	var disk_child = get_child(get_children().size()-1)
 	if( !(disk_child is RecordDisk) ):
 		return
-	var current_songs : Array[AudioStreamPlayer] = disk_child.album.songs
-	disk_child.global_rotation.y += deg_to_rad(0.0001)    #spin record disk whilst playing
-	playing_song = current_songs[i]
-	if(playing_song.finished.get_connections().size() <1):     #connect logic for going to next song once one is finished
-		playing_song.finished.connect(_on_song_finished)
-	if(!playing_song.playing):
-		playing_song.play()
-	if(Input.is_action_just_pressed("skip")):    #user input for changing songs
-		playing_song.stop()
-		i+=1
+	MusicManager.play_album(disk_child.music)
 
 func _on_song_finished() -> void:
 	i+=1

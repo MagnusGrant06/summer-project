@@ -6,7 +6,7 @@ class_name Record extends Node3D
 @onready var animator = $AnimationPlayer
 @onready var camera = $"../../../Camera3D"
 @onready var parent_record = $"."
-@onready var disk = $RigidBody3D/RecordDisk
+@onready var disk : RecordDisk = $RigidBody3D/RecordDisk
 @onready var physics_body : RigidBody3D = $RigidBody3D
 @onready var image_plane : MeshInstance3D = $RigidBody3D/ImagePlane
 

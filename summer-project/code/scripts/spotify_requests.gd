@@ -114,7 +114,8 @@ func create_api_request(request_type : HTTPClient.Method, uri : String, body : S
 	
 	var headers: Array = [
 		"Authorization: Bearer " + access_token,
-		"Content-Type: application/json"
+		"Content-Type: application/json",
+		"Content-Length: " + str(body.length())
 	]
 	
 	var error : Error = http_request.request(
@@ -131,11 +132,19 @@ func create_api_request(request_type : HTTPClient.Method, uri : String, body : S
 
 	if(request[0] != HTTPRequest.RESULT_SUCCESS):
 		push_error("API Request Failed on Godot side: " + str(request[0]))
-	if(request[1] != 200):
+	if(request[1] != 200 && request[1] != 201 && request[1] != 202 && request[1] != 204):
 		push_error("API Request Failed on Spotify side: " + str(request[1]))
+	
+	
+	#bug on spotify side where queue calls dont return JSON but garbage strings
+	var body_string : String = request[3].get_string_from_utf8();
+	
+	if( !body_string.begins_with("{") && body_string.begins_with("[")):
+		return {};
 	
 	print("result: " + str(request[0]))
 	print("response code " + str(request[1]))
+	
 	return JSON.parse_string(request[3].get_string_from_utf8())
 	
 
