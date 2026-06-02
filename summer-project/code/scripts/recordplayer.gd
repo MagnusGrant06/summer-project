@@ -5,7 +5,7 @@ extends Node3D
 @onready var collection_area_hitbox = $CollectionArea/CollisionShape3D
 @onready var collection_area = $CollectionArea
 @onready var disk_join = $DiskJoin
-@onready var play_button_collision = $PlayButton/CollisionShape3D
+@onready var play_button_collision = $PlayButton/Area3D/CollisionShape3D
 
 #flags for changing player state
 var mouse_entered = false

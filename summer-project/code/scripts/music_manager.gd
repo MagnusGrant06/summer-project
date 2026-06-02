@@ -18,15 +18,23 @@ func initialize_display_records():
 	]
 	
 	for id : String in album_ids:
-		var album_dict : Dictionary = await request_creator.create_api_request(HTTPClient.METHOD_GET,"/albums/" + id);
+		all_albums.append(await create_album(id))
+
+func create_album(album_id : String) -> Album:
+		var album_dict : Dictionary = await request_creator.create_api_request(HTTPClient.METHOD_GET,"/albums/" + album_id);
 		var track_list : Array = album_dict["tracks"]["items"]
-		var album_cover : Image = await request_creator.get_image(album_dict["images"][0]["url"])
-		all_albums.append(Album.new( album_cover, album_dict,track_list))
+		var album_cover : Image= await request_creator.get_image(album_dict["images"][0]["url"])
+		var album : Album = Album.new( album_cover, album_dict,track_list)
+		return album
+
+func search_request(query : String) -> Array:
+	var album_dict : Dictionary = await request_creator.create_api_request(HTTPClient.METHOD_GET,"search?q=" + query.uri_encode() + "&type=album&limit=3")
+	var album_array = album_dict["albums"]["items"]
+	return album_array
 
 func play_album(tracks : Array):
 	if(tracks == null):
 		return
-	
 	request_creator.create_api_request(HTTPClient.METHOD_PUT, "me/player/play", JSON.stringify({"uris": [tracks[0]["uri"]]}))
 	var i = 1
 	while i < tracks.size():

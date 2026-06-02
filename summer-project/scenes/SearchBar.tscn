@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://bc81uqbbdp3h7"]
+
+[ext_resource type="Script" uid="uid://db0iys454q66s" path="res://code/scripts/search_bar.gd" id="1_0flki"]
+[ext_resource type="FontFile" uid="uid://gohyc31jgrt6" path="res://assets/CircularStd-Black.otf" id="2_koqvg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sf8hy"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="Animation" id="Animation_koqvg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/LineEdit:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(68.5, 31)]
+}
+
+[sub_resource type="Animation" id="Animation_yr6ut"]
+resource_name = "extend_line"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/LineEdit:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(68.5, 31), Vector2(218, 31)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_025wn"]
+_data = {
+&"RESET": SubResource("Animation_koqvg"),
+&"extend_line": SubResource("Animation_yr6ut")
+}
+
+[node name="SearchBar" type="Control" unique_id=1416911129]
+layout_mode = 3
+anchor_top = 0.006
+anchor_right = 0.124000005
+anchor_bottom = 0.273
+offset_left = -1.0
+offset_top = 0.11199999
+offset_right = 118.15199
+offset_bottom = 0.09599304
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0flki")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=406215534]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 210.0
+theme_override_constants/separation = 69
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer" unique_id=1249939244]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_koqvg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_sf8hy")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_sf8hy")
+placeholder_text = "Search"
+keep_editing_on_text_submit = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=476923673]
+libraries/ = SubResource("AnimationLibrary_025wn")
+
+[connection signal="editing_toggled" from="VBoxContainer/LineEdit" to="." method="_on_line_edit_editing_toggled"]
+[connection signal="text_submitted" from="VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

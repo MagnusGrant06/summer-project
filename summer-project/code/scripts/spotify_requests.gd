@@ -187,7 +187,7 @@ func generate_code_challenge(verifier: String) -> String:
 	var ctx: HashingContext = HashingContext.new()
 	ctx.start(HashingContext.HASH_SHA256)
 	ctx.update(verifier.to_utf8_buffer())
-	var hash : PackedByteArray = ctx.finish()
+	var crypto_hash : PackedByteArray = ctx.finish()
 	
-	return Marshalls.raw_to_base64(hash) \
+	return Marshalls.raw_to_base64(crypto_hash) \
 	 .replace("+", "-").replace("/","_").replace("=","")

@@ -4,10 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://bey4vq0vq4132" path="res://scenes/shelf.tscn" id="2_nxogm"]
 [ext_resource type="PackedScene" uid="uid://dbnp2l6dop46p" path="res://scenes/record.tscn" id="3_3253y"]
 [ext_resource type="PackedScene" uid="uid://c6uttkpggem10" path="res://scenes/player.tscn" id="3_u3cyc"]
+[ext_resource type="PackedScene" uid="uid://bc81uqbbdp3h7" path="res://scenes/SearchBar.tscn" id="5_gjmho"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_drvgu"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gjmho"]
+albedo_color = Color(0.37588724, 0.24540946, 0.11126924, 1)
+uv1_scale = Vector3(20.73, 20.73, 20.73)
+
 [sub_resource type="BoxMesh" id="BoxMesh_ulcgi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t7and"]
+albedo_color = Color(0.36659476, 0.36659455, 0.36659458, 1)
+metallic = 1.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_u3cyc"]
 
@@ -23,26 +32,31 @@ transform = Transform3D(1, 0, 0, 0, 0.9486554, 0.3163114, 0, -0.3163114, 0.94865
 [node name="Tabletop" type="MeshInstance3D" parent="." unique_id=1053874238]
 transform = Transform3D(4.4559445, 0, 0, 0, 0.12336022, 0, 0, 0, 2.5324595, 0.012, 0, 0)
 mesh = SubResource("BoxMesh_drvgu")
+surface_material_override/0 = SubResource("StandardMaterial3D_gjmho")
 
 [node name="leg1" type="MeshInstance3D" parent="Tabletop" unique_id=1024507876]
 transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, 0.48315072, -8.591988, 0.4688973)
 mesh = SubResource("BoxMesh_ulcgi")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_t7and")
 
 [node name="leg2" type="MeshInstance3D" parent="Tabletop" unique_id=2100464895]
 transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, 0.4818231, -8.591989, -0.4674365)
 mesh = SubResource("BoxMesh_ulcgi")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_t7and")
 
 [node name="leg3" type="MeshInstance3D" parent="Tabletop" unique_id=1553379873]
 transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, -0.48035687, -8.591989, 0.4688973)
 mesh = SubResource("BoxMesh_ulcgi")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_t7and")
 
 [node name="leg4" type="MeshInstance3D" parent="Tabletop" unique_id=1193566441]
 transform = Transform3D(0.033999987, 0, 0, 0, 18.035551, 0, 0, 0, 0.060000002, -0.4803568, -8.5919895, -0.4731054)
 mesh = SubResource("BoxMesh_ulcgi")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_t7and")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Tabletop" unique_id=721745117]
 physics_material_override = SubResource("PhysicsMaterial_u3cyc")
@@ -52,6 +66,7 @@ shape = SubResource("BoxShape3D_m7jmp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1930687021]
 transform = Transform3D(1, 0, 0, 0, 0.8351744, 0.54998523, 0, -0.54998523, 0.8351744, 0, 4.115511, 5.1169147)
+light_energy = 0.2
 shadow_enabled = true
 
 [node name="Shelf" parent="." unique_id=1478212679 instance=ExtResource("2_nxogm")]
@@ -274,3 +289,20 @@ transform = Transform3D(0.77821016, 0, 0, 0, 0.77821016, 0, 0, 0, 0.77821016, 2.
 
 [node name="Player" parent="." unique_id=1766448089 instance=ExtResource("3_u3cyc")]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0.004540026, -0.0066188276, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1089413503]
+transform = Transform3D(1, 0, 0, 0, 0.049844608, -0.99875706, 0, 0.99875706, 0.049844608, -1.5590662, 0.89295506, -0.24369523)
+light_color = Color(1, 0.81960785, 0.5254902, 1)
+light_energy = 1.635
+spot_range = 7.52
+spot_angle = 123.67
+
+[node name="SearchBar" parent="." unique_id=1416911129 instance=ExtResource("5_gjmho")]
+anchor_left = 0.006
+anchor_top = 0.22800002
+anchor_right = 0.23400001
+anchor_bottom = 0.5
+offset_left = 0.08799982
+offset_top = 0.2559967
+offset_right = -0.5680237
+offset_bottom = -3.0

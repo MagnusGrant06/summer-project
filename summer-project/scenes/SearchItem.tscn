@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bbfbylgjhmtsh"]
+
+[ext_resource type="Script" uid="uid://dcgw7giuhyqvd" path="res://scenes/search_item.gd" id="1_lantk"]
+[ext_resource type="FontFile" uid="uid://gohyc31jgrt6" path="res://assets/CircularStd-Black.otf" id="2_c0k8s"]
+
+[node name="SearchItem" type="Control" unique_id=412617125]
+layout_mode = 3
+anchor_right = 0.19100001
+anchor_bottom = 0.106000006
+offset_right = -0.03201294
+offset_bottom = 0.31199646
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lantk")
+
+[node name="Button" type="Button" parent="." unique_id=130603627]
+layout_mode = 0
+offset_right = 218.0
+offset_bottom = 68.0
+
+[node name="AlbumCover" type="TextureRect" parent="Button" unique_id=1082173003]
+layout_mode = 0
+offset_right = 70.0
+offset_bottom = 70.0
+expand_mode = 1
+
+[node name="AlbumName" type="Label" parent="Button" unique_id=1962563443]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 2.0
+offset_right = 220.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("2_c0k8s")
+text = " "
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ArtistName" type="Label" parent="Button" unique_id=1462148632]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 42.0
+offset_right = 220.0
+offset_bottom = 66.0
+theme_override_fonts/font = ExtResource("2_c0k8s")
+theme_override_font_sizes/font_size = 11
+text = " "
+horizontal_alignment = 1
+vertical_alignment = 1
