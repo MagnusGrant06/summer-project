@@ -20,16 +20,34 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	check_for_disks()
-	if(Input.is_action_just_pressed("click") && mouse_entered && lid_open):
+
+func _input(event: InputEvent) -> void:
+	if(event.is_action_pressed("click") && mouse_entered && lid_open):
 		lid_animation.play_backwards("lid_open")
 		lid_open = false
 		collection_area_hitbox.disabled = true
 		return
-	if(Input.is_action_just_pressed("click") && mouse_entered && !lid_open):
+	if(event.is_action_pressed("click") && mouse_entered && !lid_open):
 		lid_animation.play("lid_open")
 		lid_open = true
 		collection_area_hitbox.disabled = false
 		return
+	
+	#check for playback input
+	if(event.is_action_pressed("skip", true)):
+		MusicManager.next_song()
+	if(event.is_action_pressed("previous", true)):
+		MusicManager.previous_song()
+	if(event.is_action_pressed("pause_play", true)):
+		print(currently_playing_song)
+		if(currently_playing_song):
+			MusicManager.pause()
+			currently_playing_song = false
+			return
+		else:
+			MusicManager.resume()
+			currently_playing_song = true
+			return
 
 func _on_area_3d_mouse_entered() -> void:
 	var newShader = ShaderMaterial.new()
@@ -65,7 +83,7 @@ func play_disk_music() -> void:
 	var disk_child = get_child(get_children().size()-1)
 	if( !(disk_child is RecordDisk) ):
 		return
-	MusicManager.play_album(disk_child.music)
+	MusicManager.play_album(disk_child.album_uri)
 
 func _on_song_finished() -> void:
 	i+=1

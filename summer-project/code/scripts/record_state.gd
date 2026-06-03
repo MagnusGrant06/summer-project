@@ -36,6 +36,7 @@ class DisplayRecord extends RecordState:
 			parent.animator.stop()
 			parent.record_state = ViewingRecord.new(parent)
 			Global.record_in_use = true
+			MusicManager.CURRENT_IN_USE_RECORD = parent
 
 #functionality record inside shelf/ at rest
 class StoredRecord extends RecordState:

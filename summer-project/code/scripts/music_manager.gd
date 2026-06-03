@@ -26,7 +26,7 @@ func initialize_display_records():
 ##helper method to construct an album from an spotify id
 func create_album(album_id : String) -> Album:
 		var album_dict : Dictionary = await request_creator.create_api_request(HTTPClient.METHOD_GET,"/albums/" + album_id);
-		var track_list : Array = album_dict["tracks"]["items"]
+		var track_list : String = album_dict["uri"]
 		var album_cover : Image= await request_creator.get_image(album_dict["images"][0]["url"])
 		var album : Album = Album.new( album_cover, album_dict,track_list)
 		return album
@@ -37,26 +37,17 @@ func search_request(query : String) -> Array:
 	var album_array = album_dict["albums"]["items"]
 	return album_array
 
-##handles api request for playing the first song of an album and queuing the rest
-func play_album(tracks : Array):
-	if(tracks == null):
-		return
-	request_creator.create_api_request(HTTPClient.METHOD_PUT, "me/player/play", JSON.stringify({"uris": [tracks[0]["uri"]]}))
-	var i = 1
-	while i < tracks.size():
-		await request_creator.create_api_request(HTTPClient.METHOD_POST, "me/player/queue?uri=" + tracks[i]["uri"].uri_encode(), "{}")
-		i+=1
-
+## switch either null or present album on a record with one from a search
 func switch_album(album : Album):
 	if(!Global.record_in_use || CURRENT_IN_USE_RECORD == null):
 		return
 	CURRENT_IN_USE_RECORD.album = album
 	load_record_data(CURRENT_IN_USE_RECORD, album)
 
-
+##load relevant music into record object
 func load_record_data(record : Record, album : Album):
 	record.album = album
-	record.disk.music = record.album.track_list
+	record.disk.album_uri = record.album.uri
 	
 	#setup album image using image plane
 	var album_cover : Image = album.album_cover
@@ -69,8 +60,8 @@ func load_record_data(record : Record, album : Album):
 	var rand : RandomNumberGenerator = RandomNumberGenerator.new()
 	var accumulated_col = Vector3(0,0,0)
 	for pix in range(10):
-		var rand_col = rand.randi_range(0,album_cover.get_width())
-		var rand_row = rand.randi_range(0,album_cover.get_height())
+		var rand_col = rand.randi_range(0,album_cover.get_width()-1)
+		var rand_row = rand.randi_range(0,album_cover.get_height()-1)
 		var col : Color = album_cover.get_pixel(rand_col, rand_row)
 		accumulated_col += Vector3(col.r,col.g,col.b)
 	
@@ -81,12 +72,33 @@ func load_record_data(record : Record, album : Album):
 	record.case.material_override = back_material
 
 
+## METHODS TO INTERACT WITH SPOTIFY PLAYBACK DIRECTLY
+
+##handles api request for playing the first song of an album and queuing the rest
+func play_album(uri : String):
+	if(uri == null || uri.is_empty()):
+		return
+	request_creator.create_api_request(HTTPClient.METHOD_PUT, "me/player/play", JSON.stringify({"context_uri": uri}))
+
+func next_song():
+	request_creator.create_api_request(HTTPClient.METHOD_POST, "me/player/next")
+
+func previous_song():
+	request_creator.create_api_request(HTTPClient.METHOD_POST, "me/player/previous")
+
+func pause():
+	request_creator.create_api_request(HTTPClient.METHOD_PUT, "me/player/pause")
+
+func resume():
+	request_creator.create_api_request(HTTPClient.METHOD_PUT, "me/player/play")
+
 #class for holding music information
 class Album:
 	var album_cover : Image
 	var info : Dictionary
 	var track_list : Array
-	func _init(cover : Image, inf: Dictionary, tracks : Array) -> void:
+	var uri : String
+	func _init(cover : Image, inf: Dictionary, url : String) -> void:
 		album_cover = cover
 		info = inf
-		track_list = tracks
+		uri = url

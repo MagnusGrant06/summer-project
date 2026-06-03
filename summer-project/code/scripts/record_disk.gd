@@ -17,7 +17,7 @@ var revealed = false
 var default = true
 var arbitrary_z = 1.0
 
-var music : Array
+var album_uri : String
 
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()
