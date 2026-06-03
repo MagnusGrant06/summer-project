@@ -78,6 +78,7 @@ class StoredRecord extends RecordState:
 			parent.animator.stop()
 			parent.record_state = ViewingRecord.new(parent)
 			Global.record_in_use = true
+			MusicManager.CURRENT_IN_USE_RECORD = parent
 
 #functionality for when we want to view and use a record
 class ViewingRecord extends RecordState:
@@ -110,6 +111,7 @@ class ViewingRecord extends RecordState:
 			parent.global_rotation = parent.base_rotation
 			parent.record_state = parent.base_state
 			Global.record_in_use = false
+			MusicManager.CURRENT_IN_USE_RECORD = null
 		if(Input.is_action_just_pressed("click")):
 			if(!parent.animator.is_playing() && !disk_peeked):
 				parent.animator.play("peek_disk")
