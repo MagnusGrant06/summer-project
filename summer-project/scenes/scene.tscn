@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dbnp2l6dop46p" path="res://scenes/record.tscn" id="3_3253y"]
 [ext_resource type="PackedScene" uid="uid://c6uttkpggem10" path="res://scenes/player.tscn" id="3_u3cyc"]
 [ext_resource type="PackedScene" uid="uid://bc81uqbbdp3h7" path="res://scenes/SearchBar.tscn" id="5_gjmho"]
+[ext_resource type="Texture2D" uid="uid://dk4c8ojgmu7ww" path="res://assets/loading_screen.png" id="6_t7and"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_drvgu"]
 
@@ -37,9 +38,37 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_t7and")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ruw3y"]
+resource_name = "loading_screen"
 
 [sub_resource type="Animation" id="Animation_t7and"]
 resource_name = "loading_screen_fade"
+length = 6.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -47,15 +76,52 @@ tracks/0/path = NodePath("Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(-0.033333335, 1),
+"times": PackedFloat32Array(0.5666666, 1.2666667, 2.0333333, 2.3666666, 5.2666664, 6.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(5.2666664, 6.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.3333334),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_t7and")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.3333334, 1.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.5, 0.5)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ruw3y"]
 _data = {
 &"RESET": SubResource("Animation_gjmho"),
+&"loading_screen": SubResource("Animation_ruw3y"),
 &"loading_screen_fade": SubResource("Animation_t7and")
 }
 
@@ -343,7 +409,12 @@ offset_top = 0.2559967
 offset_right = -0.5680237
 offset_bottom = -3.0
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1826962591]
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2086190534]
+texture = ExtResource("6_t7and")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1292993235]
 libraries/ = SubResource("AnimationLibrary_ruw3y")
