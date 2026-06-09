@@ -68,7 +68,7 @@ resource_name = "loading_screen"
 
 [sub_resource type="Animation" id="Animation_t7and"]
 resource_name = "loading_screen_fade"
-length = 6.6
+length = 6.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -76,7 +76,7 @@ tracks/0/path = NodePath("Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.5666666, 1.2666667, 2.0333333, 2.3666666, 5.2666664, 6.2),
+"times": PackedFloat32Array(0.5666666, 1.2666667, 2.0333333, 2.3666666, 4.7666664, 5.4333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -393,11 +393,12 @@ transform = Transform3D(0.77821016, 0, 0, 0, 0.77821016, 0, 0, 0, 0.77821016, 2.
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0.004540026, -0.0066188276, 0)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1089413503]
-transform = Transform3D(1, 0, 0, 0, 0.049844608, -0.99875706, 0, 0.99875706, 0.049844608, -1.5590662, 0.89295506, -0.24369523)
+transform = Transform3D(0.033800732, -0.049816135, 0.99818635, 0.9994285, 0.0016847843, -0.033758707, 5.0659962e-11, 0.99875706, 0.049844615, -0.9778565, 0.89295506, 0.106085)
+visible = false
 light_color = Color(1, 0.81960785, 0.5254902, 1)
 light_energy = 1.635
 spot_range = 7.52
-spot_angle = 123.67
+spot_angle = 147.96
 
 [node name="SearchBar" parent="." unique_id=1416911129 instance=ExtResource("5_gjmho")]
 anchor_left = 0.006
@@ -418,3 +419,9 @@ texture = ExtResource("6_t7and")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1292993235]
 libraries/ = SubResource("AnimationLibrary_ruw3y")
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="." unique_id=471540297]
+transform = Transform3D(-0.24970281, -0.6607018, -0.70789945, 0.21137062, -0.7506187, 0.6260144, 0.94497156, -0.006688401, -0.32708454, -1.6576399, 1.0481603, -0.5616696)
+light_color = Color(1, 0.81960785, 0.5254902, 1)
+spot_range = 13.459
+spot_angle = 52.14

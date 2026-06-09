@@ -8,12 +8,40 @@ height = 0.015
 radius = 0.48
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_m3bnq"]
+height = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crfh5"]
-albedo_color = Color(0.27752772, 0.27752772, 0.27752772, 1)
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 1.0
+roughness = 0.18
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8h21m"]
 height = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yijyc"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_vbxsj"]
+material = SubResource("StandardMaterial3D_yijyc")
+inner_radius = 0.001
+outer_radius = 0.153
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yijyc"]
+top_radius = 0.4
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vbxsj"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 1.0
+roughness = 0.18
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mocld"]
+bottom_radius = 0.4
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g3y3c"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 1.0
+roughness = 0.18
 
 [node name="RecordDisk" type="Node3D" unique_id=2004615152]
 script = ExtResource("1_crfh5")
@@ -38,6 +66,20 @@ transform = Transform3D(-1, 1.509958e-07, 6.600236e-15, 0, -4.371139e-08, 1, 1.5
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DiskBody/Disk/Area3D" unique_id=1455745067]
 transform = Transform3D(-1, 1.509958e-07, 6.600236e-15, 0, -4.371139e-08, 1, 1.509958e-07, 1, 4.371139e-08, 0, 0, 0)
 shape = SubResource("CylinderShape3D_8h21m")
+
+[node name="InnerRing" type="MeshInstance3D" parent="DiskBody" unique_id=2060613719]
+transform = Transform3D(0.687, 0, 0, 0, -2.360415e-09, -0.687, 0, 0.054, -3.0029724e-08, 0, 0, 0)
+mesh = SubResource("TorusMesh_vbxsj")
+
+[node name="DetailDisk" type="MeshInstance3D" parent="DiskBody" unique_id=1430778399]
+transform = Transform3D(0.95, 0, 0, 0, -2.1855694e-10, -0.95, 0, 0.005, -4.152582e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_yijyc")
+surface_material_override/0 = SubResource("StandardMaterial3D_vbxsj")
+
+[node name="DetailDisk2" type="MeshInstance3D" parent="DiskBody" unique_id=390563597]
+transform = Transform3D(0.95, 0, 0, 0, -2.1855694e-10, -0.95, 0, 0.005, -4.152582e-08, 0, 0, -0.0004634261)
+mesh = SubResource("CylinderMesh_mocld")
+surface_material_override/0 = SubResource("StandardMaterial3D_g3y3c")
 
 [connection signal="mouse_entered" from="DiskBody/Disk/Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="DiskBody/Disk/Area3D" to="." method="_on_area_3d_mouse_exited"]

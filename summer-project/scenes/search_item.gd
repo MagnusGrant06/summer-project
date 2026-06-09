@@ -4,8 +4,6 @@ class_name SearchItem extends Control
 @onready var artist_name : Label = $Button/ArtistName
 
 var album_object : MusicManager.Album
-func _ready() -> void:
-	print("somehting happening")
 
 func setup(cover : Image, album : String, artist : String, album_obj : MusicManager.Album) -> void:
 	album_name.text = album

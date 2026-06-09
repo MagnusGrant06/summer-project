@@ -39,7 +39,6 @@ func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("previous", true)):
 		MusicManager.previous_song()
 	if(event.is_action_pressed("pause_play", true)):
-		print(currently_playing_song)
 		if(currently_playing_song):
 			MusicManager.pause()
 			currently_playing_song = false

@@ -27,7 +27,6 @@ func start_auth():
 	
 	OS.shell_open(url)
 	_server.listen(8888)
-	print("browser opened listning")
 	await _poll_for_connection()
 	
 
@@ -56,9 +55,8 @@ func _poll_for_connection():
 	peer.put_data(response.to_utf8_buffer())
 	
 	_server.stop()
-	print("Caught redirect:")
 	var code :String = extract_user_code(request)
-	print(code)
+	
 	await exchange_code_for_token(code)
 
 ##helper method to extract user credentials from http request
@@ -103,7 +101,6 @@ func exchange_code_for_token(code : String):
 	
 	var data : Dictionary = JSON.parse_string(request[3].get_string_from_utf8())
 	access_token = data["access_token"]
-	print("Access token: " + access_token)
 	
 
 ## primary method to create api requests with the spotify API
@@ -142,8 +139,6 @@ func create_api_request(request_type : HTTPClient.Method, uri : String, body : S
 	if( !body_string.begins_with("{") && body_string.begins_with("[")):
 		return {};
 	
-	print("result: " + str(request[0]))
-	print("response code " + str(request[1]))
 	
 	return JSON.parse_string(request[3].get_string_from_utf8())
 	
