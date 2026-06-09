@@ -22,6 +22,9 @@ func _process(_delta: float) -> void:
 	check_for_disks()
 
 func _input(event: InputEvent) -> void:
+	if get_viewport().gui_get_focus_owner() is LineEdit:      
+		return
+	
 	if(event.is_action_pressed("click") && mouse_entered && lid_open):
 		lid_animation.play_backwards("lid_open")
 		lid_open = false

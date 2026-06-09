@@ -4,10 +4,6 @@ extends Node3D
 @onready var animation : AnimationPlayer = $AnimationPlayer
 @onready var background_texture : TextureRect = $TextureRect
 
-var background : Image =Image.load_from_file("res://assets/empty_loading_screen.png")
-var logo : Image = Image.load_from_file("res://assets/loading_screen_2.png")
-
-
 #load music into individual display records
 func _ready() -> void:
 	MusicManager.user_connected.connect(hide_logo)
@@ -26,6 +22,8 @@ func setup_display_albums():
 ##loading screen method to wait until user has logged into spotify
 ##then plays loading sequence to hide initial slow API calls
 func show_logo():
+	var background : Image =Image.load_from_file("res://assets/empty_loading_screen.png")
+	var logo : Image = Image.load_from_file("res://assets/loading_screen_2.png")
 	
 	logo.resize(get_viewport().get_visible_rect().size.x as int , get_viewport().get_visible_rect().size.y as int)
 	background.resize(get_viewport().get_visible_rect().size.x as int, get_viewport().get_visible_rect().size.y as int)

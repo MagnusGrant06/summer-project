@@ -19,6 +19,13 @@ var arbitrary_z = 1.0
 
 var album_uri : String
 
+var meshes_to_highlight : Array[MeshInstance3D] = []
+
+func _ready() -> void:
+	meshes_to_highlight.append($DiskBody/Disk)
+	meshes_to_highlight.append($DiskBody/DetailDisk)
+	meshes_to_highlight.append($DiskBody/DetailDisk2)
+
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()
 	parent_body.set_grabbed(grabbed)
@@ -28,12 +35,16 @@ func _process(_delta: float) -> void:
 
 func _on_area_3d_mouse_entered() -> void:
 	var newShader = ShaderMaterial.new()
-	newShader.shader = hover_shader
-	mesh.material_overlay = newShader
+	for cur_mesh : MeshInstance3D in meshes_to_highlight:
+		if(grabbed):
+			break
+		newShader.shader = hover_shader
+		cur_mesh.material_overlay = newShader
 	hovering = true
 
 func _on_area_3d_mouse_exited() -> void:
-	mesh.material_overlay = ShaderMaterial.new()
+	for cur_mesh : MeshInstance3D in meshes_to_highlight:
+		cur_mesh.material_overlay = ShaderMaterial.new()
 	hovering = false
 
 func _on_mouse_clicked() -> void:
@@ -54,6 +65,9 @@ func calculate_location() -> void:
 #very basic state machine changing mouse action depending on if the disk is grabbed or not
 func default_mouse_action() -> void:
 	if(Input.is_action_just_pressed("click") && revealed):
+		print("jide pls")
+		for cur_mesh : MeshInstance3D in meshes_to_highlight:
+			cur_mesh.material_overlay = ShaderMaterial.new()
 		grabbed = true
 		default = false
 		Global.record_in_use = false

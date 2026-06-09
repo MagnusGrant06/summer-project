@@ -31,7 +31,6 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 	
 	loading_sprite.stop()
 	loading_sprite.visible = false
-	
 
 func _process(_delta: float) -> void:
 	if(Global.record_in_use):
