@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bbfbylgjhmtsh"]
 
-[ext_resource type="Script" uid="uid://dcgw7giuhyqvd" path="res://scenes/search_item.gd" id="1_lantk"]
+[ext_resource type="Script" uid="uid://dcgw7giuhyqvd" path="res://code/scripts/search_item.gd" id="1_lantk"]
 [ext_resource type="FontFile" uid="uid://gohyc31jgrt6" path="res://assets/CircularStd-Black.otf" id="2_c0k8s"]
 
 [node name="SearchItem" type="Control" unique_id=412617125]

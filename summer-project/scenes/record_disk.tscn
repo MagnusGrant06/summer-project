@@ -48,6 +48,7 @@ script = ExtResource("1_crfh5")
 
 [node name="DiskBody" type="RigidBody3D" parent="." unique_id=1204790132]
 freeze = true
+continuous_cd = true
 script = ExtResource("2_yijyc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DiskBody" unique_id=354271156]

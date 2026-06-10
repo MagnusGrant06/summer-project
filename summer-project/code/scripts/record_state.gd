@@ -88,6 +88,7 @@ class ViewingRecord extends RecordState:
 	func _init(parent_record : Record) -> void:
 		parent = parent_record
 		parent.animator.stop()
+		_on_area_3d_mouse_entered()
 		
 	func _on_area_3d_mouse_entered() -> void:
 		var newShader = ShaderMaterial.new()
@@ -134,7 +135,13 @@ class EmptyRecord extends RecordState:
 		parent = parent_record
 		parent.physics_body.freeze = false
 		parent.physics_body.apply_central_force(Vector3(190.0,0.0,-190.0)) #apply a force to send the record to the table
-
+		parent.collisions.disabled = true
+		await parent.get_tree().create_timer(0.1).timeout
+		parent.collisions.disabled = false
+		await parent.get_tree().create_timer(1.0).timeout
+		print("acc pos " ,parent.global_position)
+		print("bnase pos, ", parent.base_position)
+	
 	func _on_area_3d_mouse_entered() -> void:
 		var newShader = ShaderMaterial.new()
 		newShader.shader = parent.hover_shader
@@ -145,5 +152,17 @@ class EmptyRecord extends RecordState:
 		parent.case.material_overlay = ShaderMaterial.new()
 		parent.image_plane.material_overlay = ShaderMaterial.new()
 		hovering = false
+	
+	#put record back in base position
+	#TODO possibly refactor node structure of record to have rigidbody3d be highest level node
+	#to avoid mathematical differences between node and physics body position / rotation
 	func _on_mouse_clicked() -> void:
-		pass
+		if(Input.is_action_just_pressed("right_click") && hovering):
+			parent.physics_body.freeze = true
+			var target_pos : Vector3 = parent.base_position
+			parent.global_position = target_pos
+			parent.physics_body.global_position = target_pos
+			var target_rot : Vector3 = parent.base_rotation
+			parent.global_rotation = target_rot
+			parent.physics_body.global_rotation = target_rot
+			parent.record_state = RecordState.DisplayRecord.new(parent)

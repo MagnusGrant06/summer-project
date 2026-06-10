@@ -9,12 +9,17 @@ class_name RecordDisk extends Node3D
 @onready var camera = $"../../../../../Camera3D"
 @onready var case_animation = $"../../AnimationPlayer"
 @onready var case = $".."
-@onready var parent= $"../.."
+@onready var parent : Record = $"../.."
 
-var grabbed = false
+var base_position : Vector3
+
 var hovering = false
+
 var revealed = false
 var default = true
+var grabbed = false
+var at_rest : bool = false
+
 var arbitrary_z = 1.0
 
 var album_uri : String
@@ -25,6 +30,7 @@ func _ready() -> void:
 	meshes_to_highlight.append($DiskBody/Disk)
 	meshes_to_highlight.append($DiskBody/DetailDisk)
 	meshes_to_highlight.append($DiskBody/DetailDisk2)
+	base_position = global_position
 
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()
@@ -33,6 +39,7 @@ func _process(_delta: float) -> void:
 		var camera_space2 = camera.project_position(get_viewport().get_mouse_position(),arbitrary_z)
 		parent_body.set_mouse_pos(camera_space2)
 
+##basic highlighting shader system for when hovering over a non grabbed disk
 func _on_area_3d_mouse_entered() -> void:
 	var newShader = ShaderMaterial.new()
 	for cur_mesh : MeshInstance3D in meshes_to_highlight:
@@ -50,10 +57,11 @@ func _on_area_3d_mouse_exited() -> void:
 func _on_mouse_clicked() -> void:
 	if(!hovering):
 		return
-	if(grabbed):
-		grabbed_mouse_action()
 	if(default):
 		default_mouse_action()
+	if(grabbed):
+		grabbed_mouse_action()
+
 
 func calculate_location() -> void:
 	var camera_space2 = camera.project_position(get_viewport().get_mouse_position(),arbitrary_z)    #convert mouse position on screen to world position in scene
@@ -65,16 +73,16 @@ func calculate_location() -> void:
 #very basic state machine changing mouse action depending on if the disk is grabbed or not
 func default_mouse_action() -> void:
 	if(Input.is_action_just_pressed("click") && revealed):
-		print("jide pls")
 		for cur_mesh : MeshInstance3D in meshes_to_highlight:
 			cur_mesh.material_overlay = ShaderMaterial.new()
 		grabbed = true
 		default = false
+		at_rest = false
 		Global.record_in_use = false
 		parent_body.freeze = false
 		reparent(master_scene,true)
 		if( !(parent.record_state is RecordState.EmptyRecord)):
-			parent.record_state = RecordState.EmptyRecord.new(parent)
+			parent.record_state = await RecordState.EmptyRecord.new(parent)
 	if(Input.is_action_just_pressed("click") && !revealed):
 		case_animation.play("reveal_disk")
 		revealed = true
@@ -82,10 +90,26 @@ func default_mouse_action() -> void:
 		revealed = false
 		case_animation.play_backwards("reveal_disk")
 
+	if(Input.is_action_just_pressed("right_click") && at_rest):
+		parent_body.freeze = true
+		global_position = base_position
+		var target_pos : Vector3 = parent.base_position
+		global_position = target_pos
+		parent_body.global_position = target_pos
+		var target_rot : Vector3 = parent.base_rotation
+		global_rotation = target_rot
+		parent_body.global_rotation = target_rot
+		default = true
+		at_rest = false
+		reparent(parent.physics_body)
+		parent.disk = self
+
+
 func grabbed_mouse_action() -> void:
 	if(Input.is_action_just_pressed("right_click")):
 		grabbed = false
 		default = true
+		at_rest = true
 	if(Input.is_action_just_pressed("scroll_up")):
 		arbitrary_z += 0.2
 	if(Input.is_action_just_pressed("scroll_down")):

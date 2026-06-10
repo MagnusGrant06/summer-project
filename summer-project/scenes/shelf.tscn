@@ -12,6 +12,9 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_x5u3a"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_x5u3a"]
+size = Vector3(3.335, 1.845, 0.1)
+
 [node name="Shelf" type="Node3D" unique_id=1109898955]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=269711215]
@@ -68,6 +71,13 @@ skeleton = NodePath("../..")
 transform = Transform3D(-1.6326203e-07, -0.115, 0, 3.735, -5.0268096e-09, 0, 0, 0, 1, 2.815, 1.814, 0)
 shape = SubResource("BoxShape3D_aw007")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1779572327]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=576558228]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D" unique_id=1779572327]
 transform = Transform3D(3.504063, 0, 0, 0, 1.9588245, 0, 0, 0, 0.067328036, 1.0748602, 2.7558806, -0.46785307)
 mesh = SubResource("BoxMesh_x5u3a")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1816811229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0491217, 2.797799, -0.47934484)
+shape = SubResource("BoxShape3D_x5u3a")
