@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dbnp2l6dop46p" path="res://scenes/record.tscn" id="3_3253y"]
 [ext_resource type="PackedScene" uid="uid://c6uttkpggem10" path="res://scenes/player.tscn" id="3_u3cyc"]
 [ext_resource type="PackedScene" uid="uid://bc81uqbbdp3h7" path="res://scenes/SearchBar.tscn" id="5_gjmho"]
+[ext_resource type="PackedScene" uid="uid://x0pe2oxiqlbx" path="res://scenes/reset_button.tscn" id="6_ruw3y"]
 [ext_resource type="Texture2D" uid="uid://dk4c8ojgmu7ww" path="res://assets/loading_screen.png" id="6_t7and"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_drvgu"]
@@ -409,6 +410,11 @@ offset_left = 0.08799982
 offset_top = 0.2559967
 offset_right = -0.5680237
 offset_bottom = -3.0
+
+[node name="ResetButton" parent="." unique_id=62016116 instance=ExtResource("6_ruw3y")]
+offset_left = 1109.0
+offset_right = 1111.528
+offset_bottom = -0.2480011
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1826962591]
 offset_right = 40.0

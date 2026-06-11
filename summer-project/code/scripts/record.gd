@@ -35,8 +35,6 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	_on_mouse_clicked()
-	if(self == $"../DisplayRecord1"):
-		print(disk)
 
 func _on_area_3d_mouse_entered() -> void:
 	record_state._on_area_3d_mouse_entered()

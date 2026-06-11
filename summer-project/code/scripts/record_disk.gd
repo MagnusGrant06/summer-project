@@ -81,7 +81,7 @@ func default_mouse_action() -> void:
 		Global.record_in_use = false
 		parent_body.freeze = false
 		reparent(master_scene,true)
-		if( !(parent.record_state is RecordState.EmptyRecord)):
+		if( (parent.record_state is RecordState.ViewingRecord)):
 			parent.record_state = await RecordState.EmptyRecord.new(parent)
 	if(Input.is_action_just_pressed("click") && !revealed):
 		case_animation.play("reveal_disk")
@@ -101,6 +101,7 @@ func default_mouse_action() -> void:
 		parent_body.global_rotation = target_rot
 		default = true
 		at_rest = false
+		parent.animator.play("RESET")
 		reparent(parent.physics_body)
 		parent.disk = self
 
