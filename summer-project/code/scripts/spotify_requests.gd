@@ -1,7 +1,7 @@
 class_name SpotifyRequests extends Node
 
-const CLIENT_ID : String = "f51c4317a5ad4491b34d088f8c746326"
-const CLIENT_SECRET : String = "5990893fbc2c464d94d7601b51779126"
+var CLIENT_ID : String = ""
+var CLIENT_SECRET : String = "" 
 const REDIRECT_URI : String = "http://127.0.0.1:8888/callback"
 const SCOPES: String = "user-modify-playback-state user-read-playback-state"
 
@@ -13,6 +13,15 @@ var search_results : Array = []
 
 ## Initialize users credentials with spotify API to allow for http requests
 func start_auth():
+	
+	var config : ConfigFile = ConfigFile.new()
+	var error : Error = config.load("res://config.cfg")
+	if(error != OK):
+		push_error("config file could not be loaded")
+	CLIENT_ID = config.get_value("spotify", "client_id")
+	CLIENT_SECRET = config.get_value("spotify", "client_secret")
+	
+	
 	access_token = ""
 	_code_verifier = generate_code_verifier()
 	var challenge : String = generate_code_challenge(_code_verifier)
