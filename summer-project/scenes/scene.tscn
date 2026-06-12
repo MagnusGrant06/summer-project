@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bc81uqbbdp3h7" path="res://scenes/SearchBar.tscn" id="5_gjmho"]
 [ext_resource type="PackedScene" uid="uid://x0pe2oxiqlbx" path="res://scenes/reset_button.tscn" id="6_ruw3y"]
 [ext_resource type="Texture2D" uid="uid://dk4c8ojgmu7ww" path="res://assets/loading_screen.png" id="6_t7and"]
+[ext_resource type="Texture2D" uid="uid://dp4vg47wwjytg" path="res://assets/wood_3.png" id="8_7182s"]
+[ext_resource type="Texture2D" uid="uid://qa3hvim3exiy" path="res://assets/fabric_3.png" id="8_tpwpp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_drvgu"]
 
@@ -125,6 +127,32 @@ _data = {
 &"loading_screen": SubResource("Animation_ruw3y"),
 &"loading_screen_fade": SubResource("Animation_t7and")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ruw3y"]
+size = Vector3(25, 0.1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7182s"]
+size = Vector3(25, 0.1, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ftgl"]
+albedo_texture = ExtResource("8_tpwpp")
+uv1_scale = Vector3(7.215, 7.215, 7.215)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tpwpp"]
+size = Vector3(0.1, 7.5, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ftgl"]
+size = Vector3(0.1, 7.5, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tpwpp"]
+albedo_texture = ExtResource("8_7182s")
+uv1_scale = Vector3(6.955, 6.955, 6.955)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5yiy0"]
+size = Vector3(25, 7.5, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0f71q"]
+size = Vector3(25, 7.5, 0.1)
 
 [node name="Node3D" type="Node3D" unique_id=2088492965]
 script = ExtResource("1_u3cyc")
@@ -431,3 +459,42 @@ transform = Transform3D(-0.24970281, -0.6607018, -0.70789945, 0.21137062, -0.750
 light_color = Color(1, 0.81960785, 0.5254902, 1)
 spot_range = 13.459
 spot_angle = 52.14
+
+[node name="Room" type="Node3D" parent="." unique_id=1847007151]
+
+[node name="Floor" type="StaticBody3D" parent="Room" unique_id=1494038873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.0260673, 1.4657516)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room/Floor" unique_id=1555402312]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.479458, -0.24053383, 0)
+shape = SubResource("BoxShape3D_ruw3y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room/Floor" unique_id=1598628730]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.438699, -0.24053383, 0)
+mesh = SubResource("BoxMesh_7182s")
+skeleton = NodePath("../CollisionShape3D")
+surface_material_override/0 = SubResource("StandardMaterial3D_7ftgl")
+
+[node name="RightWall" type="StaticBody3D" parent="Room" unique_id=61910515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.646876, 0, 1.4657516)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room/RightWall" unique_id=1715010915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3016591, 1.4265141, 0)
+shape = SubResource("BoxShape3D_tpwpp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room/RightWall" unique_id=1117725064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3016591, 1.4265141, 0)
+mesh = SubResource("BoxMesh_7ftgl")
+surface_material_override/0 = SubResource("StandardMaterial3D_tpwpp")
+
+[node name="BackWall" type="StaticBody3D" parent="Room" unique_id=50656790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.222658)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room/BackWall" unique_id=1768195292]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.3290873, 1.2845869, -0.29037523)
+shape = SubResource("BoxShape3D_5yiy0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room/BackWall" unique_id=635964703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5565042, 1.4248466, -0.29037523)
+mesh = SubResource("BoxMesh_0f71q")
+surface_material_override/0 = SubResource("StandardMaterial3D_tpwpp")

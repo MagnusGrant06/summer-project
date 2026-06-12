@@ -2,11 +2,27 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_jgb4e"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_viw0s"]
+albedo_color = Color(0.36659476, 0.36659455, 0.36659458, 1)
+metallic = 1.0
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jgb4e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jgb4e"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7q781"]
+albedo_color = Color(0.36659476, 0.36659455, 0.36659458, 1)
+metallic = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tw82s"]
+albedo_color = Color(0.36659476, 0.36659455, 0.36659458, 1)
+metallic = 1.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_0edba"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oyalq"]
+albedo_color = Color(0.36659476, 0.36659455, 0.36659458, 1)
+metallic = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_aw007"]
 
@@ -20,18 +36,22 @@ size = Vector3(3.335, 1.845, 0.1)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=269711215]
 transform = Transform3D(5.7041883, 0, 0, 0, 0.11544373, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_jgb4e")
+surface_material_override/0 = SubResource("StandardMaterial3D_viw0s")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1327914407]
 transform = Transform3D(-5.7041874, 1.0092411e-08, 0, -4.986759e-07, -0.11544373, 0, 0, 0, 0.99999994, 0.037427545, 3.7313228, 0)
 mesh = SubResource("BoxMesh_jgb4e")
+surface_material_override/0 = SubResource("StandardMaterial3D_viw0s")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1867338039]
 transform = Transform3D(-1.6325228e-07, 0.1154437, 0, -3.734777, -5.0462043e-09, 0, 0, 0, 0.99999976, -2.781196, 1.9233193, 0)
 mesh = SubResource("BoxMesh_jgb4e")
+surface_material_override/0 = SubResource("StandardMaterial3D_viw0s")
 
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="." unique_id=1312740448]
 transform = Transform3D(2.0948167, 0, 0, 0, 0.11544373, 0, 0, 0, 1, -1.7019546, 2.5965226, 0)
 mesh = SubResource("BoxMesh_jgb4e")
+surface_material_override/0 = SubResource("StandardMaterial3D_viw0s")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1825966504]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.035, 1.982, 0)
@@ -46,6 +66,7 @@ shape = SubResource("BoxShape3D_jgb4e")
 transform = Transform3D(3.5078743, 0, 0, 0, 0.11544373, 0, 0, 0, 1, 0.00012230873, -0.15506804, 0)
 mesh = SubResource("BoxMesh_jgb4e")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7q781")
 
 [node name="RigidBody3D2" type="RigidBody3D" parent="." unique_id=2015940136]
 freeze = true
@@ -54,6 +75,7 @@ freeze = true
 transform = Transform3D(-1.6325232e-07, -0.11544374, 0, 3.734778, -5.046206e-09, 0, 0, 0, 1, -0.6859517, 1.8143454, 0)
 mesh = SubResource("BoxMesh_jgb4e")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_tw82s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2" unique_id=1206434118]
 transform = Transform3D(-1.6326203e-07, -0.115, 0, 3.735, -5.0268096e-09, 0, 0, 0, 1, -0.686, 1.814, 0)
@@ -66,6 +88,7 @@ freeze = true
 transform = Transform3D(-1.6325232e-07, -0.11544374, 0, 3.734778, -5.046206e-09, 0, 0, 0, 1, 2.814546, 1.8143454, 0)
 mesh = SubResource("BoxMesh_jgb4e")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_oyalq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D3" unique_id=1529997337]
 transform = Transform3D(-1.6326203e-07, -0.115, 0, 3.735, -5.0268096e-09, 0, 0, 0, 1, 2.815, 1.814, 0)
@@ -77,6 +100,7 @@ shape = SubResource("BoxShape3D_aw007")
 transform = Transform3D(3.504063, 0, 0, 0, 1.9588245, 0, 0, 0, 0.067328036, 1.0748602, 2.7558806, -0.46785307)
 mesh = SubResource("BoxMesh_x5u3a")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_viw0s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1816811229]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0491217, 2.797799, -0.47934484)
