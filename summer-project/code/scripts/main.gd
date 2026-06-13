@@ -3,12 +3,18 @@ extends Node3D
 @onready var loading_screen : Sprite2D = $Sprite2D
 @onready var animation : AnimationPlayer = $AnimationPlayer
 @onready var background_texture : TextureRect = $TextureRect
+@onready var reset_button = $ResetButton
 
 #load music into individual display records
 func _ready() -> void:
 	MusicManager.user_connected.connect(hide_logo)
 	show_logo()
 	await setup_display_albums()
+	reset_button.set_position(Vector2(
+		get_viewport().get_visible_rect().size.x - 50,
+		0
+	))
+	reset_button.size = Vector2(47,47)
 
 func setup_display_albums():
 	await MusicManager.initialize_display_records()
@@ -40,6 +46,6 @@ func show_logo():
 
 func hide_logo():
 	animation.play("loading_screen_fade")
-	await get_tree().create_timer(10.0).timeout
+	await get_tree().create_timer(7.0).timeout
 	loading_screen.queue_free()
 	background_texture.queue_free()

@@ -133,7 +133,7 @@ shape = SubResource("ConcavePolygonShape3D_onrkg")
 
 [node name="playerlid" type="MeshInstance3D" parent="." unique_id=1242650290]
 transform = Transform3D(0.57899994, 0, 0, 0, 0.035043314, -0.029992305, 0, 1.5466031, 0.00067957304, -0.472, 0.34307206, 0)
-transparency = 0.65
+transparency = 0.93
 mesh = ExtResource("1_4flbx")
 skeleton = NodePath("../playerbody")
 surface_material_override/0 = SubResource("StandardMaterial3D_qhqgy")
