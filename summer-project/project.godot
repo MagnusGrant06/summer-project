@@ -25,10 +25,6 @@ config/icon="res://icon.svg"
 Global="*res://code/scripts/global.gd"
 MusicManager="*res://code/scripts/music_manager.gd"
 
-[display]
-
-window/size/mode=3
-
 [file_customization]
 
 folder_colors={

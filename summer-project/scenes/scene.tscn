@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dk4c8ojgmu7ww" path="res://assets/loading_screen.png" id="6_t7and"]
 [ext_resource type="Texture2D" uid="uid://dp4vg47wwjytg" path="res://assets/wood_3.png" id="8_7182s"]
 [ext_resource type="Texture2D" uid="uid://qa3hvim3exiy" path="res://assets/fabric_3.png" id="8_tpwpp"]
+[ext_resource type="PackedScene" uid="uid://di2oih00xqvpd" path="res://scenes/display_unit.tscn" id="10_7ftgl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_drvgu"]
 
@@ -498,3 +499,6 @@ shape = SubResource("BoxShape3D_5yiy0")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5565042, 1.4248466, -0.29037523)
 mesh = SubResource("BoxMesh_0f71q")
 surface_material_override/0 = SubResource("StandardMaterial3D_tpwpp")
+
+[node name="DisplayUnit" parent="." unique_id=1615218845 instance=ExtResource("10_7ftgl")]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 1.3415613, 0.078000486, 0.06652635)

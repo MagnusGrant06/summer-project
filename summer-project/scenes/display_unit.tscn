@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://di2oih00xqvpd"]
+
+[ext_resource type="Script" uid="uid://762skfofg1ka" path="res://code/scripts/display_unit.gd" id="1_xyvsa"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_0mvql"]
+inner_radius = 0.113
+outer_radius = 0.254
+rings = 7
+ring_segments = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fhatx"]
+albedo_color = Color(0.36659476, 0.36659455, 0.36659458, 1)
+metallic = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1k3rj"]
+radius = 0.1
+height = 1.5
+
+[node name="DisplayUnit" type="Node3D" unique_id=1615218845]
+script = ExtResource("1_xyvsa")
+
+[node name="MeshInstance3D17" type="MeshInstance3D" parent="." unique_id=45442827]
+transform = Transform3D(1, 0, 0, 0, 0.6061619, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("TorusMesh_0mvql")
+surface_material_override/0 = SubResource("StandardMaterial3D_fhatx")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=874447983]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.011320934, 0)
+spot_angle = 27.86
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1325621639]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1925857275]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6015061, 0)
+shape = SubResource("CapsuleShape3D_1k3rj")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="." unique_id=521945912]
+transform = Transform3D(0.03672244, 0.04570784, -0.9982796, 0.0033359225, 0.99894226, 0.045860887, 0.99931985, -0.005014288, 0.036531117, 0, 0.9646619, 0)
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
