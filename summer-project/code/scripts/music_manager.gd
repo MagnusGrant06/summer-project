@@ -70,7 +70,9 @@ func load_record_data(record : Record, album : Album):
 	#change rest of record to average color
 	accumulated_col /= 10
 	var back_material : StandardMaterial3D = StandardMaterial3D.new()
-	back_material.albedo_color = Color(accumulated_col.x, accumulated_col.y, accumulated_col.z)
+	var mesh_color : Color = Color(accumulated_col.x, accumulated_col.y, accumulated_col.z)
+	back_material.albedo_color = mesh_color
+	record.mesh_color = mesh_color
 	record.case.material_override = back_material
 
 

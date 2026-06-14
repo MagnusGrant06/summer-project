@@ -86,6 +86,7 @@ func play_disk_music() -> void:
 	if( !(disk_child is RecordDisk) ):
 		return
 	MusicManager.play_album(disk_child.album_uri)
+	currently_playing_song = true
 
 func _on_song_finished() -> void:
 	i+=1

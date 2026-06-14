@@ -15,6 +15,8 @@ var base_position
 var base_rotation
 var dummy_record
 
+var mesh_color : Color
+
 var record_state : RecordState
 var base_state : RecordState
 
